@@ -1,0 +1,49 @@
+{
+  "name": "n8n-nodes-crawlora",
+  "version": "0.1.0",
+  "description": "n8n community node for Crawlora — structured web data from the public web.",
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "crawlora",
+    "web-scraping",
+    "web-data",
+    "api"
+  ],
+  "license": "MIT",
+  "homepage": "https://crawlora.net",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Crawlora-org/n8n-nodes-crawlora.git"
+  },
+  "engines": {
+    "node": ">=20.15"
+  },
+  "main": "index.js",
+  "scripts": {
+    "gen": "node scripts/gen-properties.cjs",
+    "build": "tsc && node scripts/copy-assets.cjs",
+    "dev": "tsc --watch",
+    "lint": "tsc --noEmit",
+    "smoke": "node scripts/smoke.cjs",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/CrawloraApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Crawlora/Crawlora.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@devlikeapro/n8n-openapi-node": "^0.1.4",
+    "n8n-workflow": "^2.16.0",
+    "swagger2openapi": "^7.0.8",
+    "typescript": "^5.5.0"
+  }
+}
