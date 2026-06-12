@@ -1830,7 +1830,7 @@
         "name": "Google Search",
         "value": "Google Search",
         "action": "Google search API",
-        "description": "Returns normalized Google web search results. Results are fetched through proxied browser renderers that race several concurrent renders per request (concurrent in-render rendering) and return the first clean result, with stale-cache fallback when available. The endpoint returns 503 when Google serves a challenge page or unusable HTML. Rate limit is enforced at 1 request per second, and if the limit is exceeded a 429 status code is returned with rate limit headers.",
+        "description": "Returns normalized Google web search results. Results are fetched through proxied browser renderers that race several concurrent renders per request and return the first clean result, with stale-cache fallback when available. The endpoint returns 503 when Google serves a challenge page or unusable HTML. Rate limit is enforced at 1 request per second, and if the limit is exceeded a 429 status code is returned with rate limit headers.",
         "routing": {
           "request": {
             "method": "POST",
