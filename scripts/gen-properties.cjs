@@ -25,7 +25,7 @@ const SWAGGER_PATH = process.env.SWAGGER_PATH;
 const OUT_DIR = path.resolve(__dirname, '../nodes/Crawlora');
 
 // Internal / account / admin surfaces that must not appear in the public node.
-const SKIP_TAGS = new Set(['Billing', 'Usage', 'Referrals', 'Admin']);
+const SKIP_TAGS = new Set(['Billing', 'Usage', 'Referrals', 'Admin', 'Polymarket']);
 const SKIP_PATH = /^\/(admin|ping|release|health|internal)\b/i;
 const HTTP_METHODS = new Set(['get', 'post', 'put', 'patch', 'delete']);
 
