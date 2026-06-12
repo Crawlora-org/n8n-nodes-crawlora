@@ -47,6 +47,21 @@ npm run smoke                            # load the built node and print resourc
 `npm run gen` loads the Crawlora OpenAPI/Swagger spec from `SWAGGER_PATH` (a file path or URL),
 converts it to OpenAPI 3.0, drops internal/account endpoints, and rebuilds the node properties.
 
+## Publishing
+
+CI builds and smoke-tests on every push/PR. To release, push a `v*` tag — the **Publish** workflow
+publishes to npm with [provenance](https://docs.npmjs.com/generating-provenance-statements) (required
+for n8n community-node verification since 2026-05-01):
+
+```bash
+npm version <patch|minor>   # creates the v* tag
+git push --follow-tags
+```
+
+One-time: add an automation npm token as the `NPM_TOKEN` repository secret. Lint the package against
+n8n's guidelines with `npx @n8n/scan-community-package .`, then submit it for the verified badge per
+the [n8n community-node docs](https://docs.n8n.io/integrations/creating-nodes/deploy/submit-community-nodes/).
+
 ## Links
 
 - API documentation: https://docs.crawlora.net
