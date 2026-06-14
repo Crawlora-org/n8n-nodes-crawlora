@@ -37,6 +37,8 @@ const RESOURCE_NAMES = {
 	LinkedIn: 'LinkedIn',
 	GooglePlay: 'Google Play',
 	AppStore: 'App Store',
+	IMDb: 'IMDb',
+	'Shop.app': 'Shop.app',
 };
 const BRAND_FIXES = [
 	[/\bTik Tok\b/g, 'TikTok'],
@@ -47,6 +49,10 @@ const BRAND_FIXES = [
 	[/\bYoutube\b/g, 'YouTube'],
 	[/\bEbay\b/g, 'eBay'],
 	[/\bLinkedin\b/g, 'LinkedIn'],
+	[/\bImdb\b/g, 'IMDb'],
+	[/\bRottentomatoes\b/g, 'Rotten Tomatoes'],
+	[/\bAppstore\b/g, 'App Store'],
+	[/\bGoogleplay\b/g, 'Google Play'],
 ];
 function fixBrands(s) {
 	let out = s;

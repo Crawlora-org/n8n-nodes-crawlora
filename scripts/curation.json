@@ -1,5 +1,6 @@
 {
-  "_comment": "Curated allow-list for the VERIFIED n8n node. Keys are resource tags; values are an array of operationIds to keep, or \"*\" for all ops in that tag. Anything not listed is dropped at build time. n8n verifies curated single-vendor nodes (SerpApi ~37 ops, ScrapingBee ~17) — a 430-op node is too sprawling to review. Tune this list to grow the node by demand; the full surface stays available via `CURATE=0 npm run gen`. See webscraping-fe docs/n8n-verified-node-packaging-plan-2026-06.md.",
+  "_comment": "Curated allow-list for the VERIFIED n8n node. Keys are resource tags; values are an array of operationIds to keep, or \"*\" for all ops in that tag. Anything not listed is dropped at build time. n8n verifies curated single-vendor nodes — a 430-op node is too sprawling to review. Tune this list to grow the node by demand; the full surface stays available via `CURATE=0 npm run gen`. See webscraping-fe docs/n8n-verified-node-packaging-plan-2026-06.md.",
+
   "Web": "*",
   "Google": [
     "google-search",
@@ -9,12 +10,22 @@
     "google-jobs",
     "google-map-search",
     "google-map-place",
-    "google-trends-explore"
+    "google-trends-explore",
+    "google-finance-quote",
+    "google-finance-news",
+    "google-finance-search"
   ],
+  "Bing": "*",
+  "Brave": "*",
+
   "Datasets": "*",
   "Geocoding": "*",
+
   "Amazon": "*",
   "eBay": ["ebay-search", "ebay-item", "ebay-seller"],
+  "Shopify": ["shopify-store", "shopify-products", "shopify-product", "shopify-collections"],
+  "Shop.app": ["shop-app-search", "shop-app-product", "shop-app-product-reviews", "shop-app-shop"],
+
   "YouTube": [
     "youtube-search",
     "youtube-video",
@@ -32,8 +43,29 @@
   "TikTok": ["tiktok-search", "tiktok-profile", "tiktok-post", "tiktok-video-comments"],
   "Instagram": "*",
   "LinkedIn": "*",
+
   "Trustpilot": ["trustpilot-business-search", "trustpilot-business", "trustpilot-business-reviews"],
+
   "AppStore": ["appstore-search", "appstore-app", "appstore-reviews"],
   "GooglePlay": ["googleplay-search", "googleplay-app", "googleplay-reviews"],
-  "Zillow": "*"
+
+  "Zillow": "*",
+
+  "Yahoo Finance": [
+    "yahoo-finance-search",
+    "yahoo-finance-ticker-quote",
+    "yahoo-finance-ticker-info",
+    "yahoo-finance-ticker-history",
+    "yahoo-finance-ticker-financials",
+    "yahoo-finance-ticker-news"
+  ],
+
+  "IMDb": ["imdb-search", "imdb-title", "imdb-title-reviews", "imdb-name"],
+  "Rotten Tomatoes": [
+    "rottentomatoes-search",
+    "rottentomatoes-movie",
+    "rottentomatoes-movie-reviews",
+    "rottentomatoes-series"
+  ],
+  "Spotify": ["spotify-search", "spotify-artist", "spotify-album", "spotify-track", "spotify-playlist"]
 }

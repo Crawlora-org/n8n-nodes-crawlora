@@ -16,6 +16,16 @@
         "description": ""
       },
       {
+        "name": "Bing",
+        "value": "Bing",
+        "description": ""
+      },
+      {
+        "name": "Brave",
+        "value": "Brave",
+        "description": ""
+      },
+      {
         "name": "Web",
         "value": "Web",
         "description": ""
@@ -46,6 +56,11 @@
         "description": ""
       },
       {
+        "name": "IMDb",
+        "value": "IM Db",
+        "description": ""
+      },
+      {
         "name": "Instagram",
         "value": "Instagram",
         "description": ""
@@ -61,6 +76,26 @@
         "description": ""
       },
       {
+        "name": "Rotten Tomatoes",
+        "value": "Rotten Tomatoes",
+        "description": ""
+      },
+      {
+        "name": "Shop.app",
+        "value": "Shop App",
+        "description": ""
+      },
+      {
+        "name": "Shopify",
+        "value": "Shopify",
+        "description": ""
+      },
+      {
+        "name": "Spotify",
+        "value": "Spotify",
+        "description": ""
+      },
+      {
         "name": "TikTok",
         "value": "Tik Tok",
         "description": ""
@@ -68,6 +103,11 @@
       {
         "name": "Trustpilot",
         "value": "Trustpilot",
+        "description": ""
+      },
+      {
+        "name": "Yahoo Finance",
+        "value": "Yahoo Finance",
         "description": ""
       },
       {
@@ -149,8 +189,8 @@
     },
     "options": [
       {
-        "name": "Appstore App",
-        "value": "Appstore App",
+        "name": "App Store App",
+        "value": "App Store App",
         "action": "Retrieve full App Store app details",
         "description": "Returns normalized app metadata from the App Store lookup API. Provide either `id` or `app_id`.",
         "routing": {
@@ -161,8 +201,8 @@
         }
       },
       {
-        "name": "Appstore Reviews",
-        "value": "Appstore Reviews",
+        "name": "App Store Reviews",
+        "value": "App Store Reviews",
         "action": "Retrieve App Store reviews",
         "description": "Returns one page of customer reviews for an app. Provide either `id` or `app_id`.",
         "routing": {
@@ -173,14 +213,166 @@
         }
       },
       {
-        "name": "Appstore Search",
-        "value": "Appstore Search",
+        "name": "App Store Search",
+        "value": "App Store Search",
         "action": "Search the App Store",
         "description": "Returns App Store search results for a term. Set `ids_only=true` to return only app IDs.",
         "routing": {
           "request": {
             "method": "GET",
             "url": "=/appstore/search"
+          }
+        }
+      }
+    ],
+    "default": ""
+  },
+  {
+    "displayName": "Operation",
+    "name": "operation",
+    "type": "options",
+    "noDataExpression": true,
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ]
+      }
+    },
+    "options": [
+      {
+        "name": "Bing Images",
+        "value": "Bing Images",
+        "action": "Search Bing image results",
+        "description": "Returns normalized Bing image search results for a query string. Locale defaults to country=us and lang=en-us. Results are fetched from public Bing image HTML/async pages and return 503 when Bing serves a challenge page or unusable HTML.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/bing/images"
+          }
+        }
+      },
+      {
+        "name": "Bing News",
+        "value": "Bing News",
+        "action": "Search Bing news results",
+        "description": "Returns normalized Bing news search results for a query string. Locale defaults to country=us and lang=en-us. Results are fetched from public Bing news HTML/async pages and return 503 when Bing serves a challenge page or unusable HTML.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/bing/news"
+          }
+        }
+      },
+      {
+        "name": "Bing Search",
+        "value": "Bing Search",
+        "action": "Search Bing web results",
+        "description": "Returns normalized Bing web search results for a query string, including organic results, optional context panel data, related queries, people-also-ask questions, news modules, video modules, and page-based pagination. Empty optional blocks are omitted from the JSON response. Locale defaults to country=us and lang=en-us. Results are fetched with the repo's Chrome-impersonated request client and return 503 when Bing serves a challenge page or unusable HTML.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/bing/search"
+          }
+        }
+      },
+      {
+        "name": "Bing Suggest",
+        "value": "Bing Suggest",
+        "action": "Suggest Bing search queries",
+        "description": "Returns Bing autosuggest query completions for a query prefix. Locale defaults to country=us and lang=en-us. Suggestions are fetched from public Bing suggest endpoints and trimmed to the requested count.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/bing/suggest"
+          }
+        }
+      },
+      {
+        "name": "Bing Videos",
+        "value": "Bing Videos",
+        "action": "Search Bing video results",
+        "description": "Returns normalized Bing video search results for a query string. Locale defaults to country=us and lang=en-us. Results are fetched from public Bing video HTML/async pages and return 503 when Bing serves a challenge page or unusable HTML.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/bing/videos"
+          }
+        }
+      }
+    ],
+    "default": ""
+  },
+  {
+    "displayName": "Operation",
+    "name": "operation",
+    "type": "options",
+    "noDataExpression": true,
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ]
+      }
+    },
+    "options": [
+      {
+        "name": "Brave Images",
+        "value": "Brave Images",
+        "action": "Search Brave image results",
+        "description": "Returns normalized Brave image search results for a query string. Locale defaults to country=us and lang=en-us. Results are fetched from public Brave Search image HTML and return 503 when Brave serves a challenge page or unusable HTML.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/brave/images"
+          }
+        }
+      },
+      {
+        "name": "Brave News",
+        "value": "Brave News",
+        "action": "Search Brave news results",
+        "description": "Returns normalized Brave news search results for a query string. Locale defaults to country=us and lang=en-us. Results are fetched from public Brave Search news HTML and return 503 when Brave serves a challenge page or unusable HTML.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/brave/news"
+          }
+        }
+      },
+      {
+        "name": "Brave Search",
+        "value": "Brave Search",
+        "action": "Search Brave",
+        "description": "Returns normalized web search results from Brave Search for a query string, along with offset-based pagination, related queries, discussions, videos, and the right-side knowledge card when Brave includes one. Use time_range for preset ranges or date_from/date_to for a custom YYYY-MM-DD range. Locale defaults to country=us and lang=en-us.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/brave/search"
+          }
+        }
+      },
+      {
+        "name": "Brave Suggest",
+        "value": "Brave Suggest",
+        "action": "Suggest Brave search queries",
+        "description": "Returns Brave autosuggest query completions for a query prefix. Locale defaults to country=us and lang=en-us. Suggestions are fetched from public Brave Search suggest JSON and trimmed to the requested count.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/brave/suggest"
+          }
+        }
+      },
+      {
+        "name": "Brave Videos",
+        "value": "Brave Videos",
+        "action": "Search Brave video results",
+        "description": "Returns normalized Brave video search results for a query string. Locale defaults to country=us and lang=en-us. Results are fetched from public Brave Search video HTML and return 503 when Brave serves a challenge page or unusable HTML.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/brave/videos"
           }
         }
       }
@@ -433,6 +625,42 @@
     },
     "options": [
       {
+        "name": "Google Finance News",
+        "value": "Google Finance News",
+        "action": "Google Finance quote news",
+        "description": "Returns normalized news articles for a quote.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/google/finance/news/{{$parameter[\"quote\"]}}"
+          }
+        }
+      },
+      {
+        "name": "Google Finance Quote",
+        "value": "Google Finance Quote",
+        "action": "Google Finance Quote API",
+        "description": "Fetches the latest quote data for a provided stock symbol from Google Finance https://www.google.com/finance/quote/AAPL:NASDAQ?hl=en.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/google/finance/quote/{{$parameter[\"quote\"]}}"
+          }
+        }
+      },
+      {
+        "name": "Google Finance Search",
+        "value": "Google Finance Search",
+        "action": "Google Finance Search API",
+        "description": "Fetches normalized search results for a provided keyword from Google Finance.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/google/finance/search"
+          }
+        }
+      },
+      {
         "name": "Google Jobs",
         "value": "Google Jobs",
         "action": "Search Google Jobs",
@@ -545,8 +773,8 @@
     },
     "options": [
       {
-        "name": "Googleplay App",
-        "value": "Googleplay App",
+        "name": "Google Play App",
+        "value": "Google Play App",
         "action": "Retrieve full Google Play app details",
         "description": "Returns normalized app metadata from a Google Play details page, including installs, ratings, pricing, version info, developer metadata, media assets, release state, and selected user comments. Defaults: `country=us`, `lang=en`.",
         "routing": {
@@ -557,8 +785,8 @@
         }
       },
       {
-        "name": "Googleplay Reviews",
-        "value": "Googleplay Reviews",
+        "name": "Google Play Reviews",
+        "value": "Google Play Reviews",
         "action": "Retrieve Google Play reviews",
         "description": "Returns one or more pages of app reviews. Set `paginate=true` to fetch only the requested page.",
         "routing": {
@@ -569,14 +797,78 @@
         }
       },
       {
-        "name": "Googleplay Search",
-        "value": "Googleplay Search",
+        "name": "Google Play Search",
+        "value": "Google Play Search",
         "action": "Search Google Play",
         "description": "Returns Google Play search results for a term.",
         "routing": {
           "request": {
             "method": "GET",
             "url": "=/googleplay/search"
+          }
+        }
+      }
+    ],
+    "default": ""
+  },
+  {
+    "displayName": "Operation",
+    "name": "operation",
+    "type": "options",
+    "noDataExpression": true,
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "IM Db"
+        ]
+      }
+    },
+    "options": [
+      {
+        "name": "IMDb Name",
+        "value": "IMDb Name",
+        "action": "IMDb name detail",
+        "description": "Returns normalized public IMDb person metadata and known-for rows. Pass exactly one of `id` or `url`.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/imdb/name"
+          }
+        }
+      },
+      {
+        "name": "IMDb Search",
+        "value": "IMDb Search",
+        "action": "IMDb title search",
+        "description": "Returns normalized IMDb title search rows from credential-free public IMDb pages. Limit defaults to 10 and clamps to 20.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/imdb/search"
+          }
+        }
+      },
+      {
+        "name": "IMDb Title",
+        "value": "IMDb Title",
+        "action": "IMDb title detail",
+        "description": "Returns normalized IMDb title metadata from a credential-free public IMDb title page. Pass exactly one of `id` or `url`.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/imdb/title"
+          }
+        }
+      },
+      {
+        "name": "IMDb Title Reviews",
+        "value": "IMDb Title Reviews",
+        "action": "IMDb title user reviews",
+        "description": "Returns normalized public IMDb user review rows. Limit defaults to 10 and clamps to 20. Pass exactly one of `id` or `url`.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/imdb/title/reviews"
           }
         }
       }
@@ -771,6 +1063,274 @@
     "displayOptions": {
       "show": {
         "resource": [
+          "Rotten Tomatoes"
+        ]
+      }
+    },
+    "options": [
+      {
+        "name": "Rotten Tomatoes Movie",
+        "value": "Rotten Tomatoes Movie",
+        "action": "Rotten Tomatoes movie detail",
+        "description": "Returns normalized Rotten Tomatoes movie metadata, scorecard data, and representative embedded audience reviews. Pass exactly one of `path` or `url`.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/rottentomatoes/movie"
+          }
+        }
+      },
+      {
+        "name": "Rotten Tomatoes Movie Reviews",
+        "value": "Rotten Tomatoes Movie Reviews",
+        "action": "Rotten Tomatoes movie reviews",
+        "description": "Returns normalized critic or audience reviews from Rotten Tomatoes public review JSON hydrated by the movie review page, including pagination metadata. Pass exactly one of `path` or `url`. Supported `type` values are `critics`, `top-critics`, `audience`, and `verified-audience`.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/rottentomatoes/movie/reviews"
+          }
+        }
+      },
+      {
+        "name": "Rotten Tomatoes Search",
+        "value": "Rotten Tomatoes Search",
+        "action": "Rotten Tomatoes movie search",
+        "description": "Returns normalized Rotten Tomatoes movie search rows from credential-free server-rendered search HTML.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/rottentomatoes/search"
+          }
+        }
+      },
+      {
+        "name": "Rotten Tomatoes Series",
+        "value": "Rotten Tomatoes Series",
+        "action": "Rotten Tomatoes series detail",
+        "description": "Returns normalized Rotten Tomatoes TV series metadata and scorecard data from a credential-free public series page. Pass exactly one of `path` or `url`.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/rottentomatoes/series"
+          }
+        }
+      }
+    ],
+    "default": ""
+  },
+  {
+    "displayName": "Operation",
+    "name": "operation",
+    "type": "options",
+    "noDataExpression": true,
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shop App"
+        ]
+      }
+    },
+    "options": [
+      {
+        "name": "Shop App Product",
+        "value": "Shop App Product",
+        "action": "Get Shop.app product",
+        "description": "Returns normalized public product details from Shop.app.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/shop-app/products/{{$parameter[\"id\"]}}"
+          }
+        }
+      },
+      {
+        "name": "Shop App Product Reviews",
+        "value": "Shop App Product Reviews",
+        "action": "List Shop.app product reviews",
+        "description": "Returns public product reviews from a Shop.app product page.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/shop-app/products/{{$parameter[\"id\"]}}/reviews"
+          }
+        }
+      },
+      {
+        "name": "Shop App Search",
+        "value": "Shop App Search",
+        "action": "Search Shop.app products",
+        "description": "Searches Shop.app product results using the credential-free public web search flow. Limit defaults to 20 and accepts values up to 50.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/shop-app/search"
+          }
+        }
+      },
+      {
+        "name": "Shop App Shop",
+        "value": "Shop App Shop",
+        "action": "Get Shop.app shop",
+        "description": "Returns public Shop.app merchant profile details.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/shop-app/shops/{{$parameter[\"handle\"]}}"
+          }
+        }
+      }
+    ],
+    "default": ""
+  },
+  {
+    "displayName": "Operation",
+    "name": "operation",
+    "type": "options",
+    "noDataExpression": true,
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shopify"
+        ]
+      }
+    },
+    "options": [
+      {
+        "name": "Shopify Collections",
+        "value": "Shopify Collections",
+        "action": "List Shopify collections",
+        "description": "Returns normalized collections from a public Shopify `/collections.json` endpoint. Valid empty result pages return `200` with an empty collections array.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/shopify/collections"
+          }
+        }
+      },
+      {
+        "name": "Shopify Products",
+        "value": "Shopify Products",
+        "action": "List Shopify products",
+        "description": "Returns normalized products from a public Shopify `/products.json` endpoint. Valid empty result pages return `200` with an empty products array.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/shopify/products"
+          }
+        }
+      },
+      {
+        "name": "Shopify Product",
+        "value": "Shopify Product",
+        "action": "Get Shopify product",
+        "description": "Returns normalized product detail from Shopify's credential-free product handle `.js` endpoint.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/shopify/products/{{$parameter[\"handle\"]}}"
+          }
+        }
+      },
+      {
+        "name": "Shopify Store",
+        "value": "Shopify Store",
+        "action": "Get Shopify store metadata",
+        "description": "Resolves a public Shopify storefront and returns normalized metadata from credential-free storefront JSON. If the vanity domain blocks `/products.json`, the service may fall back to a public `*.myshopify.com` domain discovered from the storefront page.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/shopify/store"
+          }
+        }
+      }
+    ],
+    "default": ""
+  },
+  {
+    "displayName": "Operation",
+    "name": "operation",
+    "type": "options",
+    "noDataExpression": true,
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ]
+      }
+    },
+    "options": [
+      {
+        "name": "Spotify Album",
+        "value": "Spotify Album",
+        "action": "Retrieve Spotify album details",
+        "description": "Returns normalized Spotify Web Player album metadata and tracks from private Pathfinder responses.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/spotify/album"
+          }
+        }
+      },
+      {
+        "name": "Spotify Artist",
+        "value": "Spotify Artist",
+        "action": "Retrieve Spotify artist details",
+        "description": "Returns normalized Spotify Web Player artist overview data from private Pathfinder responses.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/spotify/artist"
+          }
+        }
+      },
+      {
+        "name": "Spotify Playlist",
+        "value": "Spotify Playlist",
+        "action": "Retrieve Spotify playlist details",
+        "description": "Returns normalized Spotify Web Player playlist metadata and items from Spotify's fetchPlaylist Pathfinder response. Provide either uri or id; defaults to a known public playlist when omitted.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/spotify/playlist"
+          }
+        }
+      },
+      {
+        "name": "Spotify Search",
+        "value": "Spotify Search",
+        "action": "Search Spotify catalog",
+        "description": "Returns normalized Spotify Web Player catalog search results across tracks, artists, albums, playlists, shows, episodes, audiobooks, and top results. The endpoint fetches anonymous Spotify credentials at request time; caller-supplied Spotify bearer or client tokens are not required.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/spotify/search"
+          }
+        }
+      },
+      {
+        "name": "Spotify Track",
+        "value": "Spotify Track",
+        "action": "Retrieve Spotify track details",
+        "description": "Returns normalized Spotify Web Player track metadata from Spotify's getTrack Pathfinder response. Provide either uri or id; defaults to a known public track when omitted.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/spotify/track"
+          }
+        }
+      }
+    ],
+    "default": ""
+  },
+  {
+    "displayName": "Operation",
+    "name": "operation",
+    "type": "options",
+    "noDataExpression": true,
+    "displayOptions": {
+      "show": {
+        "resource": [
           "Tik Tok"
         ]
       }
@@ -873,6 +1433,94 @@
           "request": {
             "method": "GET",
             "url": "=/trustpilot/business/{{$parameter[\"slug\"]}}/reviews"
+          }
+        }
+      }
+    ],
+    "default": ""
+  },
+  {
+    "displayName": "Operation",
+    "name": "operation",
+    "type": "options",
+    "noDataExpression": true,
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ]
+      }
+    },
+    "options": [
+      {
+        "name": "Yahoo Finance Search",
+        "value": "Yahoo Finance Search",
+        "action": "Yahoo Finance search",
+        "description": "Returns normalized Yahoo Finance quotes, news, lists, and optional research reports for a query.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/yahoo-finance/search"
+          }
+        }
+      },
+      {
+        "name": "Yahoo Finance Ticker Financials",
+        "value": "Yahoo Finance Ticker Financials",
+        "action": "Yahoo Finance financial statements",
+        "description": "Returns annual, quarterly, or supported trailing income, balance sheet, or cash flow statement data.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/yahoo-finance/ticker/{{$parameter[\"symbol\"]}}/financials"
+          }
+        }
+      },
+      {
+        "name": "Yahoo Finance Ticker History",
+        "value": "Yahoo Finance Ticker History",
+        "action": "Yahoo Finance historical prices",
+        "description": "Returns normalized OHLCV points for a symbol. Use either period or start/end.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/yahoo-finance/ticker/{{$parameter[\"symbol\"]}}/history"
+          }
+        }
+      },
+      {
+        "name": "Yahoo Finance Ticker Info",
+        "value": "Yahoo Finance Ticker Info",
+        "action": "Yahoo Finance ticker info",
+        "description": "Returns normalized profile, quote type, price, statistics, and summary modules for a symbol.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/yahoo-finance/ticker/{{$parameter[\"symbol\"]}}/info"
+          }
+        }
+      },
+      {
+        "name": "Yahoo Finance Ticker News",
+        "value": "Yahoo Finance Ticker News",
+        "action": "Yahoo Finance ticker news",
+        "description": "Returns Yahoo Finance news search results for a symbol.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/yahoo-finance/ticker/{{$parameter[\"symbol\"]}}/news"
+          }
+        }
+      },
+      {
+        "name": "Yahoo Finance Ticker Quote",
+        "value": "Yahoo Finance Ticker Quote",
+        "action": "Yahoo Finance ticker quote",
+        "description": "Returns normalized fast quote fields for one Yahoo Finance symbol.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/yahoo-finance/ticker/{{$parameter[\"symbol\"]}}/quote"
           }
         }
       }
@@ -1107,31 +1755,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Amazon"
-        ],
-        "operation": [
-          "Amazon Product"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /amazon/search",
     "name": "operation",
     "type": "notice",
@@ -1227,31 +1850,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Amazon"
-        ],
-        "operation": [
-          "Amazon Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /amazon/suggest/{keyword}",
     "name": "operation",
     "type": "notice",
@@ -1289,31 +1887,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Amazon"
-        ],
-        "operation": [
-          "Amazon Suggest"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /appstore/app",
     "name": "operation",
     "type": "notice",
@@ -1327,7 +1900,7 @@
           "App Store"
         ],
         "operation": [
-          "Appstore App"
+          "App Store App"
         ]
       }
     }
@@ -1352,7 +1925,7 @@
           "App Store"
         ],
         "operation": [
-          "Appstore App"
+          "App Store App"
         ]
       }
     }
@@ -1377,7 +1950,7 @@
           "App Store"
         ],
         "operation": [
-          "Appstore App"
+          "App Store App"
         ]
       }
     }
@@ -1402,7 +1975,7 @@
           "App Store"
         ],
         "operation": [
-          "Appstore App"
+          "App Store App"
         ]
       }
     }
@@ -1427,7 +2000,7 @@
           "App Store"
         ],
         "operation": [
-          "Appstore App"
+          "App Store App"
         ]
       }
     }
@@ -1452,32 +2025,7 @@
           "App Store"
         ],
         "operation": [
-          "Appstore App"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "App Store"
-        ],
-        "operation": [
-          "Appstore App"
+          "App Store App"
         ]
       }
     }
@@ -1496,7 +2044,7 @@
           "App Store"
         ],
         "operation": [
-          "Appstore Reviews"
+          "App Store Reviews"
         ]
       }
     }
@@ -1521,7 +2069,7 @@
           "App Store"
         ],
         "operation": [
-          "Appstore Reviews"
+          "App Store Reviews"
         ]
       }
     }
@@ -1546,7 +2094,7 @@
           "App Store"
         ],
         "operation": [
-          "Appstore Reviews"
+          "App Store Reviews"
         ]
       }
     }
@@ -1571,7 +2119,7 @@
           "App Store"
         ],
         "operation": [
-          "Appstore Reviews"
+          "App Store Reviews"
         ]
       }
     }
@@ -1596,7 +2144,7 @@
           "App Store"
         ],
         "operation": [
-          "Appstore Reviews"
+          "App Store Reviews"
         ]
       }
     }
@@ -1631,7 +2179,7 @@
           "App Store"
         ],
         "operation": [
-          "Appstore Reviews"
+          "App Store Reviews"
         ]
       }
     }
@@ -1656,32 +2204,7 @@
           "App Store"
         ],
         "operation": [
-          "Appstore Reviews"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "App Store"
-        ],
-        "operation": [
-          "Appstore Reviews"
+          "App Store Reviews"
         ]
       }
     }
@@ -1700,7 +2223,7 @@
           "App Store"
         ],
         "operation": [
-          "Appstore Search"
+          "App Store Search"
         ]
       }
     }
@@ -1726,7 +2249,7 @@
           "App Store"
         ],
         "operation": [
-          "Appstore Search"
+          "App Store Search"
         ]
       }
     }
@@ -1751,7 +2274,7 @@
           "App Store"
         ],
         "operation": [
-          "Appstore Search"
+          "App Store Search"
         ]
       }
     }
@@ -1776,7 +2299,7 @@
           "App Store"
         ],
         "operation": [
-          "Appstore Search"
+          "App Store Search"
         ]
       }
     }
@@ -1801,7 +2324,7 @@
           "App Store"
         ],
         "operation": [
-          "Appstore Search"
+          "App Store Search"
         ]
       }
     }
@@ -1826,7 +2349,7 @@
           "App Store"
         ],
         "operation": [
-          "Appstore Search"
+          "App Store Search"
         ]
       }
     }
@@ -1851,32 +2374,2745 @@
           "App Store"
         ],
         "operation": [
-          "Appstore Search"
+          "App Store Search"
         ]
       }
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
+    "displayName": "GET /bing/images",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
     "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing Images"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Q",
+    "name": "q",
+    "required": true,
+    "description": "Search query",
+    "default": "openai",
     "type": "string",
     "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
+      "send": {
+        "type": "query",
+        "property": "q",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
       }
     },
     "displayOptions": {
       "show": {
         "resource": [
-          "App Store"
+          "Bing"
         ],
         "operation": [
-          "Appstore Search"
+          "Bing Images"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Page",
+    "name": "page",
+    "description": "1-based page number; defaults to 1",
+    "default": 1,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "page",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing Images"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Count",
+    "name": "count",
+    "description": "Results per page; defaults to 10, clamped to 1..50",
+    "default": 10,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "count",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing Images"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Country",
+    "name": "country",
+    "description": "Two-letter country code; defaults to us",
+    "default": "us",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "country",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing Images"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Lang",
+    "name": "lang",
+    "description": "Bing UI language; defaults to en-us",
+    "default": "en-us",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "lang",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing Images"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /bing/news",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing News"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Q",
+    "name": "q",
+    "required": true,
+    "description": "Search query",
+    "default": "openai",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "q",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing News"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Page",
+    "name": "page",
+    "description": "1-based page number; defaults to 1",
+    "default": 1,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "page",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing News"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Count",
+    "name": "count",
+    "description": "Results per page; defaults to 10, clamped to 1..50",
+    "default": 10,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "count",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing News"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Country",
+    "name": "country",
+    "description": "Two-letter country code; defaults to us",
+    "default": "us",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "country",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing News"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Lang",
+    "name": "lang",
+    "description": "Bing UI language; defaults to en-us",
+    "default": "en-us",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "lang",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing News"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /bing/search",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Q",
+    "name": "q",
+    "required": true,
+    "description": "Search query",
+    "default": "openai",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "q",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Page",
+    "name": "page",
+    "description": "1-based page number; defaults to 1",
+    "default": 1,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "page",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Count",
+    "name": "count",
+    "description": "Results per page; defaults to 10, clamped to 1..50",
+    "default": 10,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "count",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Country",
+    "name": "country",
+    "description": "Two-letter country code; defaults to us",
+    "default": "us",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "country",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Lang",
+    "name": "lang",
+    "description": "Bing UI language; defaults to en-us",
+    "default": "en-us",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "lang",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /bing/suggest",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing Suggest"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Q",
+    "name": "q",
+    "required": true,
+    "description": "Search query prefix",
+    "default": "openai",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "q",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing Suggest"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Count",
+    "name": "count",
+    "description": "Suggestions to return; defaults to 10, clamped to 1..12",
+    "default": 10,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "count",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing Suggest"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Country",
+    "name": "country",
+    "description": "Two-letter country code; defaults to us",
+    "default": "us",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "country",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing Suggest"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Lang",
+    "name": "lang",
+    "description": "Bing UI language; defaults to en-us",
+    "default": "en-us",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "lang",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing Suggest"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /bing/videos",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing Videos"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Q",
+    "name": "q",
+    "required": true,
+    "description": "Search query",
+    "default": "openai",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "q",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing Videos"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Page",
+    "name": "page",
+    "description": "1-based page number; defaults to 1",
+    "default": 1,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "page",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing Videos"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Count",
+    "name": "count",
+    "description": "Results per page; defaults to 10, clamped to 1..50",
+    "default": 10,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "count",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing Videos"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Country",
+    "name": "country",
+    "description": "Two-letter country code; defaults to us",
+    "default": "us",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "country",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing Videos"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Lang",
+    "name": "lang",
+    "description": "Bing UI language; defaults to en-us",
+    "default": "en-us",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "lang",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Bing"
+        ],
+        "operation": [
+          "Bing Videos"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /brave/images",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Images"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Q",
+    "name": "q",
+    "required": true,
+    "description": "Search query",
+    "default": "openai",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "q",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Images"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Offset",
+    "name": "offset",
+    "description": "Zero-based Brave result page; defaults to 0",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "offset",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Images"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Count",
+    "name": "count",
+    "description": "Results to return; defaults to 10, clamped to 1..50",
+    "default": 10,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "count",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Images"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Country",
+    "name": "country",
+    "description": "Brave result country; defaults to us",
+    "default": "us",
+    "type": "options",
+    "options": [
+      {
+        "name": "All",
+        "value": "all"
+      },
+      {
+        "name": "Ar",
+        "value": "ar"
+      },
+      {
+        "name": "At",
+        "value": "at"
+      },
+      {
+        "name": "Au",
+        "value": "au"
+      },
+      {
+        "name": "Be",
+        "value": "be"
+      },
+      {
+        "name": "Br",
+        "value": "br"
+      },
+      {
+        "name": "Ca",
+        "value": "ca"
+      },
+      {
+        "name": "Ch",
+        "value": "ch"
+      },
+      {
+        "name": "Cl",
+        "value": "cl"
+      },
+      {
+        "name": "Cn",
+        "value": "cn"
+      },
+      {
+        "name": "De",
+        "value": "de"
+      },
+      {
+        "name": "Dk",
+        "value": "dk"
+      },
+      {
+        "name": "Es",
+        "value": "es"
+      },
+      {
+        "name": "Fi",
+        "value": "fi"
+      },
+      {
+        "name": "Fr",
+        "value": "fr"
+      },
+      {
+        "name": "Gb",
+        "value": "gb"
+      },
+      {
+        "name": "Gr",
+        "value": "gr"
+      },
+      {
+        "name": "Hk",
+        "value": "hk"
+      },
+      {
+        "name": "Id",
+        "value": "id"
+      },
+      {
+        "name": "In",
+        "value": "in"
+      },
+      {
+        "name": "It",
+        "value": "it"
+      },
+      {
+        "name": "Jp",
+        "value": "jp"
+      },
+      {
+        "name": "Kr",
+        "value": "kr"
+      },
+      {
+        "name": "Mx",
+        "value": "mx"
+      },
+      {
+        "name": "My",
+        "value": "my"
+      },
+      {
+        "name": "Nl",
+        "value": "nl"
+      },
+      {
+        "name": "No",
+        "value": "no"
+      },
+      {
+        "name": "Nz",
+        "value": "nz"
+      },
+      {
+        "name": "Ph",
+        "value": "ph"
+      },
+      {
+        "name": "Pl",
+        "value": "pl"
+      },
+      {
+        "name": "Pt",
+        "value": "pt"
+      },
+      {
+        "name": "Ru",
+        "value": "ru"
+      },
+      {
+        "name": "Sa",
+        "value": "sa"
+      },
+      {
+        "name": "Se",
+        "value": "se"
+      },
+      {
+        "name": "Sg",
+        "value": "sg"
+      },
+      {
+        "name": "Tr",
+        "value": "tr"
+      },
+      {
+        "name": "Tw",
+        "value": "tw"
+      },
+      {
+        "name": "Us",
+        "value": "us"
+      },
+      {
+        "name": "Za",
+        "value": "za"
+      }
+    ],
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "country",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Images"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Lang",
+    "name": "lang",
+    "description": "Brave UI language; defaults to en-us",
+    "default": "en-us",
+    "type": "options",
+    "options": [
+      {
+        "name": "De De",
+        "value": "de-de"
+      },
+      {
+        "name": "En Ca",
+        "value": "en-ca"
+      },
+      {
+        "name": "En Gb",
+        "value": "en-gb"
+      },
+      {
+        "name": "En In",
+        "value": "en-in"
+      },
+      {
+        "name": "En Us",
+        "value": "en-us"
+      },
+      {
+        "name": "Fi Fi",
+        "value": "fi-fi"
+      },
+      {
+        "name": "Fr Ca",
+        "value": "fr-ca"
+      },
+      {
+        "name": "Fr Fr",
+        "value": "fr-fr"
+      },
+      {
+        "name": "Ja Jp",
+        "value": "ja-jp"
+      },
+      {
+        "name": "Pt Br",
+        "value": "pt-br"
+      },
+      {
+        "name": "Sq Al",
+        "value": "sq-al"
+      },
+      {
+        "name": "Sw Ke",
+        "value": "sw-ke"
+      },
+      {
+        "name": "Zh Tw",
+        "value": "zh-tw"
+      }
+    ],
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "lang",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Images"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /brave/news",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave News"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Q",
+    "name": "q",
+    "required": true,
+    "description": "Search query",
+    "default": "openai",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "q",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave News"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Offset",
+    "name": "offset",
+    "description": "Zero-based Brave result page; defaults to 0",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "offset",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave News"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Count",
+    "name": "count",
+    "description": "Results to return; defaults to 10, clamped to 1..50",
+    "default": 10,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "count",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave News"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Country",
+    "name": "country",
+    "description": "Brave result country; defaults to us",
+    "default": "us",
+    "type": "options",
+    "options": [
+      {
+        "name": "All",
+        "value": "all"
+      },
+      {
+        "name": "Ar",
+        "value": "ar"
+      },
+      {
+        "name": "At",
+        "value": "at"
+      },
+      {
+        "name": "Au",
+        "value": "au"
+      },
+      {
+        "name": "Be",
+        "value": "be"
+      },
+      {
+        "name": "Br",
+        "value": "br"
+      },
+      {
+        "name": "Ca",
+        "value": "ca"
+      },
+      {
+        "name": "Ch",
+        "value": "ch"
+      },
+      {
+        "name": "Cl",
+        "value": "cl"
+      },
+      {
+        "name": "Cn",
+        "value": "cn"
+      },
+      {
+        "name": "De",
+        "value": "de"
+      },
+      {
+        "name": "Dk",
+        "value": "dk"
+      },
+      {
+        "name": "Es",
+        "value": "es"
+      },
+      {
+        "name": "Fi",
+        "value": "fi"
+      },
+      {
+        "name": "Fr",
+        "value": "fr"
+      },
+      {
+        "name": "Gb",
+        "value": "gb"
+      },
+      {
+        "name": "Gr",
+        "value": "gr"
+      },
+      {
+        "name": "Hk",
+        "value": "hk"
+      },
+      {
+        "name": "Id",
+        "value": "id"
+      },
+      {
+        "name": "In",
+        "value": "in"
+      },
+      {
+        "name": "It",
+        "value": "it"
+      },
+      {
+        "name": "Jp",
+        "value": "jp"
+      },
+      {
+        "name": "Kr",
+        "value": "kr"
+      },
+      {
+        "name": "Mx",
+        "value": "mx"
+      },
+      {
+        "name": "My",
+        "value": "my"
+      },
+      {
+        "name": "Nl",
+        "value": "nl"
+      },
+      {
+        "name": "No",
+        "value": "no"
+      },
+      {
+        "name": "Nz",
+        "value": "nz"
+      },
+      {
+        "name": "Ph",
+        "value": "ph"
+      },
+      {
+        "name": "Pl",
+        "value": "pl"
+      },
+      {
+        "name": "Pt",
+        "value": "pt"
+      },
+      {
+        "name": "Ru",
+        "value": "ru"
+      },
+      {
+        "name": "Sa",
+        "value": "sa"
+      },
+      {
+        "name": "Se",
+        "value": "se"
+      },
+      {
+        "name": "Sg",
+        "value": "sg"
+      },
+      {
+        "name": "Tr",
+        "value": "tr"
+      },
+      {
+        "name": "Tw",
+        "value": "tw"
+      },
+      {
+        "name": "Us",
+        "value": "us"
+      },
+      {
+        "name": "Za",
+        "value": "za"
+      }
+    ],
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "country",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave News"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Lang",
+    "name": "lang",
+    "description": "Brave UI language; defaults to en-us",
+    "default": "en-us",
+    "type": "options",
+    "options": [
+      {
+        "name": "De De",
+        "value": "de-de"
+      },
+      {
+        "name": "En Ca",
+        "value": "en-ca"
+      },
+      {
+        "name": "En Gb",
+        "value": "en-gb"
+      },
+      {
+        "name": "En In",
+        "value": "en-in"
+      },
+      {
+        "name": "En Us",
+        "value": "en-us"
+      },
+      {
+        "name": "Fi Fi",
+        "value": "fi-fi"
+      },
+      {
+        "name": "Fr Ca",
+        "value": "fr-ca"
+      },
+      {
+        "name": "Fr Fr",
+        "value": "fr-fr"
+      },
+      {
+        "name": "Ja Jp",
+        "value": "ja-jp"
+      },
+      {
+        "name": "Pt Br",
+        "value": "pt-br"
+      },
+      {
+        "name": "Sq Al",
+        "value": "sq-al"
+      },
+      {
+        "name": "Sw Ke",
+        "value": "sw-ke"
+      },
+      {
+        "name": "Zh Tw",
+        "value": "zh-tw"
+      }
+    ],
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "lang",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave News"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Time Range",
+    "name": "time_range",
+    "description": "Preset time filter: any, day, week, month, year, or custom",
+    "default": "any",
+    "type": "options",
+    "options": [
+      {
+        "name": "Any",
+        "value": "any"
+      },
+      {
+        "name": "Day",
+        "value": "day"
+      },
+      {
+        "name": "Week",
+        "value": "week"
+      },
+      {
+        "name": "Month",
+        "value": "month"
+      },
+      {
+        "name": "Year",
+        "value": "year"
+      },
+      {
+        "name": "Custom",
+        "value": "custom"
+      }
+    ],
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "time_range",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave News"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Date From",
+    "name": "date_from",
+    "description": "Custom start date in YYYY-MM-DD; requires date_to",
+    "default": "2026-03-01",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "date_from",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave News"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Date To",
+    "name": "date_to",
+    "description": "Custom end date in YYYY-MM-DD; requires date_from",
+    "default": "2026-03-30",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "date_to",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave News"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /brave/search",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Q",
+    "name": "q",
+    "required": true,
+    "description": "Search query",
+    "default": "openai",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "q",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Offset",
+    "name": "offset",
+    "description": "Zero-based Brave result page",
+    "default": 1,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "offset",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Country",
+    "name": "country",
+    "description": "Brave result country; defaults to us",
+    "default": "us",
+    "type": "options",
+    "options": [
+      {
+        "name": "All",
+        "value": "all"
+      },
+      {
+        "name": "Ar",
+        "value": "ar"
+      },
+      {
+        "name": "At",
+        "value": "at"
+      },
+      {
+        "name": "Au",
+        "value": "au"
+      },
+      {
+        "name": "Be",
+        "value": "be"
+      },
+      {
+        "name": "Br",
+        "value": "br"
+      },
+      {
+        "name": "Ca",
+        "value": "ca"
+      },
+      {
+        "name": "Ch",
+        "value": "ch"
+      },
+      {
+        "name": "Cl",
+        "value": "cl"
+      },
+      {
+        "name": "Cn",
+        "value": "cn"
+      },
+      {
+        "name": "De",
+        "value": "de"
+      },
+      {
+        "name": "Dk",
+        "value": "dk"
+      },
+      {
+        "name": "Es",
+        "value": "es"
+      },
+      {
+        "name": "Fi",
+        "value": "fi"
+      },
+      {
+        "name": "Fr",
+        "value": "fr"
+      },
+      {
+        "name": "Gb",
+        "value": "gb"
+      },
+      {
+        "name": "Gr",
+        "value": "gr"
+      },
+      {
+        "name": "Hk",
+        "value": "hk"
+      },
+      {
+        "name": "Id",
+        "value": "id"
+      },
+      {
+        "name": "In",
+        "value": "in"
+      },
+      {
+        "name": "It",
+        "value": "it"
+      },
+      {
+        "name": "Jp",
+        "value": "jp"
+      },
+      {
+        "name": "Kr",
+        "value": "kr"
+      },
+      {
+        "name": "Mx",
+        "value": "mx"
+      },
+      {
+        "name": "My",
+        "value": "my"
+      },
+      {
+        "name": "Nl",
+        "value": "nl"
+      },
+      {
+        "name": "No",
+        "value": "no"
+      },
+      {
+        "name": "Nz",
+        "value": "nz"
+      },
+      {
+        "name": "Ph",
+        "value": "ph"
+      },
+      {
+        "name": "Pl",
+        "value": "pl"
+      },
+      {
+        "name": "Pt",
+        "value": "pt"
+      },
+      {
+        "name": "Ru",
+        "value": "ru"
+      },
+      {
+        "name": "Sa",
+        "value": "sa"
+      },
+      {
+        "name": "Se",
+        "value": "se"
+      },
+      {
+        "name": "Sg",
+        "value": "sg"
+      },
+      {
+        "name": "Tr",
+        "value": "tr"
+      },
+      {
+        "name": "Tw",
+        "value": "tw"
+      },
+      {
+        "name": "Us",
+        "value": "us"
+      },
+      {
+        "name": "Za",
+        "value": "za"
+      }
+    ],
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "country",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Lang",
+    "name": "lang",
+    "description": "Brave UI language; defaults to en-us",
+    "default": "en-us",
+    "type": "options",
+    "options": [
+      {
+        "name": "De De",
+        "value": "de-de"
+      },
+      {
+        "name": "En Ca",
+        "value": "en-ca"
+      },
+      {
+        "name": "En Gb",
+        "value": "en-gb"
+      },
+      {
+        "name": "En In",
+        "value": "en-in"
+      },
+      {
+        "name": "En Us",
+        "value": "en-us"
+      },
+      {
+        "name": "Fi Fi",
+        "value": "fi-fi"
+      },
+      {
+        "name": "Fr Ca",
+        "value": "fr-ca"
+      },
+      {
+        "name": "Fr Fr",
+        "value": "fr-fr"
+      },
+      {
+        "name": "Ja Jp",
+        "value": "ja-jp"
+      },
+      {
+        "name": "Pt Br",
+        "value": "pt-br"
+      },
+      {
+        "name": "Sq Al",
+        "value": "sq-al"
+      },
+      {
+        "name": "Sw Ke",
+        "value": "sw-ke"
+      },
+      {
+        "name": "Zh Tw",
+        "value": "zh-tw"
+      }
+    ],
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "lang",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Time Range",
+    "name": "time_range",
+    "description": "Preset time filter: any, day, week, month, year, or custom",
+    "default": "any",
+    "type": "options",
+    "options": [
+      {
+        "name": "Any",
+        "value": "any"
+      },
+      {
+        "name": "Day",
+        "value": "day"
+      },
+      {
+        "name": "Week",
+        "value": "week"
+      },
+      {
+        "name": "Month",
+        "value": "month"
+      },
+      {
+        "name": "Year",
+        "value": "year"
+      },
+      {
+        "name": "Custom",
+        "value": "custom"
+      }
+    ],
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "time_range",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Date From",
+    "name": "date_from",
+    "description": "Custom start date in YYYY-MM-DD; requires date_to",
+    "default": "2026-03-01",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "date_from",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Date To",
+    "name": "date_to",
+    "description": "Custom end date in YYYY-MM-DD; requires date_from",
+    "default": "2026-03-30",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "date_to",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /brave/suggest",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Suggest"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Q",
+    "name": "q",
+    "required": true,
+    "description": "Search query prefix",
+    "default": "openai",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "q",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Suggest"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Count",
+    "name": "count",
+    "description": "Suggestions to return; defaults to 10, clamped to 1..12",
+    "default": 10,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "count",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Suggest"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Country",
+    "name": "country",
+    "description": "Brave result country; defaults to us",
+    "default": "us",
+    "type": "options",
+    "options": [
+      {
+        "name": "All",
+        "value": "all"
+      },
+      {
+        "name": "Ar",
+        "value": "ar"
+      },
+      {
+        "name": "At",
+        "value": "at"
+      },
+      {
+        "name": "Au",
+        "value": "au"
+      },
+      {
+        "name": "Be",
+        "value": "be"
+      },
+      {
+        "name": "Br",
+        "value": "br"
+      },
+      {
+        "name": "Ca",
+        "value": "ca"
+      },
+      {
+        "name": "Ch",
+        "value": "ch"
+      },
+      {
+        "name": "Cl",
+        "value": "cl"
+      },
+      {
+        "name": "Cn",
+        "value": "cn"
+      },
+      {
+        "name": "De",
+        "value": "de"
+      },
+      {
+        "name": "Dk",
+        "value": "dk"
+      },
+      {
+        "name": "Es",
+        "value": "es"
+      },
+      {
+        "name": "Fi",
+        "value": "fi"
+      },
+      {
+        "name": "Fr",
+        "value": "fr"
+      },
+      {
+        "name": "Gb",
+        "value": "gb"
+      },
+      {
+        "name": "Gr",
+        "value": "gr"
+      },
+      {
+        "name": "Hk",
+        "value": "hk"
+      },
+      {
+        "name": "Id",
+        "value": "id"
+      },
+      {
+        "name": "In",
+        "value": "in"
+      },
+      {
+        "name": "It",
+        "value": "it"
+      },
+      {
+        "name": "Jp",
+        "value": "jp"
+      },
+      {
+        "name": "Kr",
+        "value": "kr"
+      },
+      {
+        "name": "Mx",
+        "value": "mx"
+      },
+      {
+        "name": "My",
+        "value": "my"
+      },
+      {
+        "name": "Nl",
+        "value": "nl"
+      },
+      {
+        "name": "No",
+        "value": "no"
+      },
+      {
+        "name": "Nz",
+        "value": "nz"
+      },
+      {
+        "name": "Ph",
+        "value": "ph"
+      },
+      {
+        "name": "Pl",
+        "value": "pl"
+      },
+      {
+        "name": "Pt",
+        "value": "pt"
+      },
+      {
+        "name": "Ru",
+        "value": "ru"
+      },
+      {
+        "name": "Sa",
+        "value": "sa"
+      },
+      {
+        "name": "Se",
+        "value": "se"
+      },
+      {
+        "name": "Sg",
+        "value": "sg"
+      },
+      {
+        "name": "Tr",
+        "value": "tr"
+      },
+      {
+        "name": "Tw",
+        "value": "tw"
+      },
+      {
+        "name": "Us",
+        "value": "us"
+      },
+      {
+        "name": "Za",
+        "value": "za"
+      }
+    ],
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "country",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Suggest"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Lang",
+    "name": "lang",
+    "description": "Brave UI language; defaults to en-us",
+    "default": "en-us",
+    "type": "options",
+    "options": [
+      {
+        "name": "De De",
+        "value": "de-de"
+      },
+      {
+        "name": "En Ca",
+        "value": "en-ca"
+      },
+      {
+        "name": "En Gb",
+        "value": "en-gb"
+      },
+      {
+        "name": "En In",
+        "value": "en-in"
+      },
+      {
+        "name": "En Us",
+        "value": "en-us"
+      },
+      {
+        "name": "Fi Fi",
+        "value": "fi-fi"
+      },
+      {
+        "name": "Fr Ca",
+        "value": "fr-ca"
+      },
+      {
+        "name": "Fr Fr",
+        "value": "fr-fr"
+      },
+      {
+        "name": "Ja Jp",
+        "value": "ja-jp"
+      },
+      {
+        "name": "Pt Br",
+        "value": "pt-br"
+      },
+      {
+        "name": "Sq Al",
+        "value": "sq-al"
+      },
+      {
+        "name": "Sw Ke",
+        "value": "sw-ke"
+      },
+      {
+        "name": "Zh Tw",
+        "value": "zh-tw"
+      }
+    ],
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "lang",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Suggest"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /brave/videos",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Videos"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Q",
+    "name": "q",
+    "required": true,
+    "description": "Search query",
+    "default": "openai",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "q",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Videos"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Offset",
+    "name": "offset",
+    "description": "Zero-based Brave result page; defaults to 0",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "offset",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Videos"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Count",
+    "name": "count",
+    "description": "Results to return; defaults to 10, clamped to 1..50",
+    "default": 10,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "count",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Videos"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Country",
+    "name": "country",
+    "description": "Brave result country; defaults to us",
+    "default": "us",
+    "type": "options",
+    "options": [
+      {
+        "name": "All",
+        "value": "all"
+      },
+      {
+        "name": "Ar",
+        "value": "ar"
+      },
+      {
+        "name": "At",
+        "value": "at"
+      },
+      {
+        "name": "Au",
+        "value": "au"
+      },
+      {
+        "name": "Be",
+        "value": "be"
+      },
+      {
+        "name": "Br",
+        "value": "br"
+      },
+      {
+        "name": "Ca",
+        "value": "ca"
+      },
+      {
+        "name": "Ch",
+        "value": "ch"
+      },
+      {
+        "name": "Cl",
+        "value": "cl"
+      },
+      {
+        "name": "Cn",
+        "value": "cn"
+      },
+      {
+        "name": "De",
+        "value": "de"
+      },
+      {
+        "name": "Dk",
+        "value": "dk"
+      },
+      {
+        "name": "Es",
+        "value": "es"
+      },
+      {
+        "name": "Fi",
+        "value": "fi"
+      },
+      {
+        "name": "Fr",
+        "value": "fr"
+      },
+      {
+        "name": "Gb",
+        "value": "gb"
+      },
+      {
+        "name": "Gr",
+        "value": "gr"
+      },
+      {
+        "name": "Hk",
+        "value": "hk"
+      },
+      {
+        "name": "Id",
+        "value": "id"
+      },
+      {
+        "name": "In",
+        "value": "in"
+      },
+      {
+        "name": "It",
+        "value": "it"
+      },
+      {
+        "name": "Jp",
+        "value": "jp"
+      },
+      {
+        "name": "Kr",
+        "value": "kr"
+      },
+      {
+        "name": "Mx",
+        "value": "mx"
+      },
+      {
+        "name": "My",
+        "value": "my"
+      },
+      {
+        "name": "Nl",
+        "value": "nl"
+      },
+      {
+        "name": "No",
+        "value": "no"
+      },
+      {
+        "name": "Nz",
+        "value": "nz"
+      },
+      {
+        "name": "Ph",
+        "value": "ph"
+      },
+      {
+        "name": "Pl",
+        "value": "pl"
+      },
+      {
+        "name": "Pt",
+        "value": "pt"
+      },
+      {
+        "name": "Ru",
+        "value": "ru"
+      },
+      {
+        "name": "Sa",
+        "value": "sa"
+      },
+      {
+        "name": "Se",
+        "value": "se"
+      },
+      {
+        "name": "Sg",
+        "value": "sg"
+      },
+      {
+        "name": "Tr",
+        "value": "tr"
+      },
+      {
+        "name": "Tw",
+        "value": "tw"
+      },
+      {
+        "name": "Us",
+        "value": "us"
+      },
+      {
+        "name": "Za",
+        "value": "za"
+      }
+    ],
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "country",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Videos"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Lang",
+    "name": "lang",
+    "description": "Brave UI language; defaults to en-us",
+    "default": "en-us",
+    "type": "options",
+    "options": [
+      {
+        "name": "De De",
+        "value": "de-de"
+      },
+      {
+        "name": "En Ca",
+        "value": "en-ca"
+      },
+      {
+        "name": "En Gb",
+        "value": "en-gb"
+      },
+      {
+        "name": "En In",
+        "value": "en-in"
+      },
+      {
+        "name": "En Us",
+        "value": "en-us"
+      },
+      {
+        "name": "Fi Fi",
+        "value": "fi-fi"
+      },
+      {
+        "name": "Fr Ca",
+        "value": "fr-ca"
+      },
+      {
+        "name": "Fr Fr",
+        "value": "fr-fr"
+      },
+      {
+        "name": "Ja Jp",
+        "value": "ja-jp"
+      },
+      {
+        "name": "Pt Br",
+        "value": "pt-br"
+      },
+      {
+        "name": "Sq Al",
+        "value": "sq-al"
+      },
+      {
+        "name": "Sw Ke",
+        "value": "sw-ke"
+      },
+      {
+        "name": "Zh Tw",
+        "value": "zh-tw"
+      }
+    ],
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "lang",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Videos"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Time Range",
+    "name": "time_range",
+    "description": "Preset time filter: any, day, week, month, year, or custom",
+    "default": "any",
+    "type": "options",
+    "options": [
+      {
+        "name": "Any",
+        "value": "any"
+      },
+      {
+        "name": "Day",
+        "value": "day"
+      },
+      {
+        "name": "Week",
+        "value": "week"
+      },
+      {
+        "name": "Month",
+        "value": "month"
+      },
+      {
+        "name": "Year",
+        "value": "year"
+      },
+      {
+        "name": "Custom",
+        "value": "custom"
+      }
+    ],
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "time_range",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Videos"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Date From",
+    "name": "date_from",
+    "description": "Custom start date in YYYY-MM-DD; requires date_to",
+    "default": "2026-03-01",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "date_from",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Videos"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Date To",
+    "name": "date_to",
+    "description": "Custom end date in YYYY-MM-DD; requires date_from",
+    "default": "2026-03-30",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "date_to",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Brave"
+        ],
+        "operation": [
+          "Brave Videos"
         ]
       }
     }
@@ -1889,31 +5125,6 @@
       "theme": "info"
     },
     "default": "",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Web"
-        ],
-        "operation": [
-          "Contact"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -2031,31 +5242,6 @@
       "theme": "info"
     },
     "default": "",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Datasets"
-        ],
-        "operation": [
-          "Datasets List"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -2488,31 +5674,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Datasets"
-        ],
-        "operation": [
-          "Datasets Google Map Businesses Facets"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /datasets/google-map-businesses/items/{place_id}",
     "name": "operation",
     "type": "notice",
@@ -2538,31 +5699,6 @@
     "description": "Google Place ID, max 256 characters",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Datasets"
-        ],
-        "operation": [
-          "Datasets Google Map Businesses Item"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -2783,31 +5919,6 @@
         "property": "page_size",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Datasets"
-        ],
-        "operation": [
-          "Datasets Google Map Businesses Nearby"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -3266,31 +6377,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Datasets"
-        ],
-        "operation": [
-          "Datasets Google Map Businesses Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "POST /diagnostics/antibot-check",
     "name": "operation",
     "type": "notice",
@@ -3298,31 +6384,6 @@
       "theme": "info"
     },
     "default": "",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Web"
-        ],
-        "operation": [
-          "Antibot Check"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -3423,31 +6484,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "E Bay"
-        ],
-        "operation": [
-          "eBay Item"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "POST /ebay/search",
     "name": "operation",
     "type": "notice",
@@ -3455,31 +6491,6 @@
       "theme": "info"
     },
     "default": "",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "E Bay"
-        ],
-        "operation": [
-          "eBay Search"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -3662,31 +6673,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "E Bay"
-        ],
-        "operation": [
-          "eBay Seller"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /geocoding/lookup",
     "name": "operation",
     "type": "notice",
@@ -3818,31 +6804,6 @@
         "property": "namedetails",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Geocoding"
-        ],
-        "operation": [
-          "Geocoding Lookup"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -4039,31 +7000,6 @@
         "property": "namedetails",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Geocoding"
-        ],
-        "operation": [
-          "Geocoding Reverse"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -4422,32 +7358,7 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Geocoding"
-        ],
-        "operation": [
-          "Geocoding Search"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "POST /google/jobs",
+    "displayName": "GET /google/finance/news/{quote}",
     "name": "operation",
     "type": "notice",
     "typeOptions": {
@@ -4460,25 +7371,144 @@
           "Google"
         ],
         "operation": [
-          "Google Jobs"
+          "Google Finance News"
         ]
       }
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
+    "displayName": "Quote",
+    "name": "quote",
     "required": true,
-    "description": "API key required",
+    "description": "Quote identifier such as AAPL:NASDAQ",
+    "default": "",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Google"
+        ],
+        "operation": [
+          "Google Finance News"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Limit",
+    "name": "limit",
+    "description": "Article limit",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "limit",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Google"
+        ],
+        "operation": [
+          "Google Finance News"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /google/finance/quote/{quote}",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Google"
+        ],
+        "operation": [
+          "Google Finance Quote"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Quote",
+    "name": "quote",
+    "required": true,
+    "description": "Stock symbol to fetch the latest quote for (e.g., AAPL:NASDAQ, BTC-USD)",
+    "default": "",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Google"
+        ],
+        "operation": [
+          "Google Finance Quote"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /google/finance/search",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Google"
+        ],
+        "operation": [
+          "Google Finance Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Q",
+    "name": "q",
+    "required": true,
+    "description": "Keyword to search for (e.g., Apple)",
     "default": "",
     "type": "string",
     "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
+      "send": {
+        "type": "query",
+        "property": "q",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
       }
     },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Google"
+        ],
+        "operation": [
+          "Google Finance Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "POST /google/jobs",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
     "displayOptions": {
       "show": {
         "resource": [
@@ -4601,31 +7631,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google Map Place"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "POST /google/map/search",
     "name": "operation",
     "type": "notice",
@@ -4633,31 +7638,6 @@
       "theme": "info"
     },
     "default": "",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google Map Search"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -4887,31 +7867,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google News"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "POST /google/search",
     "name": "operation",
     "type": "notice",
@@ -4919,31 +7874,6 @@
       "theme": "info"
     },
     "default": "",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google Search"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -5202,31 +8132,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google Suggest"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "POST /google/trends/explore",
     "name": "operation",
     "type": "notice",
@@ -5234,31 +8139,6 @@
       "theme": "info"
     },
     "default": "",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google Trends Explore"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -6674,31 +9554,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google Videos"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /googleplay/app",
     "name": "operation",
     "type": "notice",
@@ -6712,7 +9567,7 @@
           "Google Play"
         ],
         "operation": [
-          "Googleplay App"
+          "Google Play App"
         ]
       }
     }
@@ -6738,7 +9593,7 @@
           "Google Play"
         ],
         "operation": [
-          "Googleplay App"
+          "Google Play App"
         ]
       }
     }
@@ -6763,7 +9618,7 @@
           "Google Play"
         ],
         "operation": [
-          "Googleplay App"
+          "Google Play App"
         ]
       }
     }
@@ -6788,32 +9643,7 @@
           "Google Play"
         ],
         "operation": [
-          "Googleplay App"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google Play"
-        ],
-        "operation": [
-          "Googleplay App"
+          "Google Play App"
         ]
       }
     }
@@ -6832,7 +9662,7 @@
           "Google Play"
         ],
         "operation": [
-          "Googleplay Reviews"
+          "Google Play Reviews"
         ]
       }
     }
@@ -6858,7 +9688,7 @@
           "Google Play"
         ],
         "operation": [
-          "Googleplay Reviews"
+          "Google Play Reviews"
         ]
       }
     }
@@ -6883,7 +9713,7 @@
           "Google Play"
         ],
         "operation": [
-          "Googleplay Reviews"
+          "Google Play Reviews"
         ]
       }
     }
@@ -6908,7 +9738,7 @@
           "Google Play"
         ],
         "operation": [
-          "Googleplay Reviews"
+          "Google Play Reviews"
         ]
       }
     }
@@ -6933,7 +9763,7 @@
           "Google Play"
         ],
         "operation": [
-          "Googleplay Reviews"
+          "Google Play Reviews"
         ]
       }
     }
@@ -6958,7 +9788,7 @@
           "Google Play"
         ],
         "operation": [
-          "Googleplay Reviews"
+          "Google Play Reviews"
         ]
       }
     }
@@ -6983,7 +9813,7 @@
           "Google Play"
         ],
         "operation": [
-          "Googleplay Reviews"
+          "Google Play Reviews"
         ]
       }
     }
@@ -7008,32 +9838,7 @@
           "Google Play"
         ],
         "operation": [
-          "Googleplay Reviews"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google Play"
-        ],
-        "operation": [
-          "Googleplay Reviews"
+          "Google Play Reviews"
         ]
       }
     }
@@ -7052,7 +9857,7 @@
           "Google Play"
         ],
         "operation": [
-          "Googleplay Search"
+          "Google Play Search"
         ]
       }
     }
@@ -7078,7 +9883,7 @@
           "Google Play"
         ],
         "operation": [
-          "Googleplay Search"
+          "Google Play Search"
         ]
       }
     }
@@ -7103,7 +9908,7 @@
           "Google Play"
         ],
         "operation": [
-          "Googleplay Search"
+          "Google Play Search"
         ]
       }
     }
@@ -7128,7 +9933,7 @@
           "Google Play"
         ],
         "operation": [
-          "Googleplay Search"
+          "Google Play Search"
         ]
       }
     }
@@ -7153,7 +9958,7 @@
           "Google Play"
         ],
         "operation": [
-          "Googleplay Search"
+          "Google Play Search"
         ]
       }
     }
@@ -7178,7 +9983,7 @@
           "Google Play"
         ],
         "operation": [
-          "Googleplay Search"
+          "Google Play Search"
         ]
       }
     }
@@ -7203,32 +10008,309 @@
           "Google Play"
         ],
         "operation": [
-          "Googleplay Search"
+          "Google Play Search"
         ]
       }
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
+    "displayName": "GET /imdb/name",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
     "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "IM Db"
+        ],
+        "operation": [
+          "IMDb Name"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Id",
+    "name": "id",
+    "description": "IMDb name id",
+    "default": "nm0634240",
     "type": "string",
     "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
+      "send": {
+        "type": "query",
+        "property": "id",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
       }
     },
     "displayOptions": {
       "show": {
         "resource": [
-          "Google Play"
+          "IM Db"
         ],
         "operation": [
-          "Googleplay Search"
+          "IMDb Name"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Url",
+    "name": "url",
+    "description": "Absolute https://www.imdb.com/name/<id>/ URL",
+    "default": "https://www.imdb.com/name/nm0634240/",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "url",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "IM Db"
+        ],
+        "operation": [
+          "IMDb Name"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /imdb/search",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "IM Db"
+        ],
+        "operation": [
+          "IMDb Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Query",
+    "name": "query",
+    "required": true,
+    "description": "Search query",
+    "default": "inception",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "query",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "IM Db"
+        ],
+        "operation": [
+          "IMDb Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Limit",
+    "name": "limit",
+    "description": "Rows to return, default 10, max 20",
+    "default": 10,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "limit",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "IM Db"
+        ],
+        "operation": [
+          "IMDb Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /imdb/title",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "IM Db"
+        ],
+        "operation": [
+          "IMDb Title"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Id",
+    "name": "id",
+    "description": "IMDb title id",
+    "default": "tt1375666",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "id",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "IM Db"
+        ],
+        "operation": [
+          "IMDb Title"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Url",
+    "name": "url",
+    "description": "Absolute https://www.imdb.com/title/<id>/ URL",
+    "default": "https://www.imdb.com/title/tt1375666/",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "url",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "IM Db"
+        ],
+        "operation": [
+          "IMDb Title"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /imdb/title/reviews",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "IM Db"
+        ],
+        "operation": [
+          "IMDb Title Reviews"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Id",
+    "name": "id",
+    "description": "IMDb title id",
+    "default": "tt1375666",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "id",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "IM Db"
+        ],
+        "operation": [
+          "IMDb Title Reviews"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Url",
+    "name": "url",
+    "description": "Absolute https://www.imdb.com/title/<id>/ URL",
+    "default": "https://www.imdb.com/title/tt1375666/",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "url",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "IM Db"
+        ],
+        "operation": [
+          "IMDb Title Reviews"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Limit",
+    "name": "limit",
+    "description": "Rows to return, default 10, max 20",
+    "default": 10,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "limit",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "IM Db"
+        ],
+        "operation": [
+          "IMDb Title Reviews"
         ]
       }
     }
@@ -7289,31 +10371,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Instagram"
-        ],
-        "operation": [
-          "Instagram Post"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /instagram/profile/{username}",
     "name": "operation",
     "type": "notice",
@@ -7339,31 +10396,6 @@
     "description": "Instagram username",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Instagram"
-        ],
-        "operation": [
-          "Instagram Profile"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -7438,31 +10470,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Instagram"
-        ],
-        "operation": [
-          "Instagram Reels"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /linkedin/company/{id}",
     "name": "operation",
     "type": "notice",
@@ -7488,31 +10495,6 @@
     "description": "LinkedIn Company ID",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Linked In"
-        ],
-        "operation": [
-          "LinkedIn Company"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -7562,31 +10544,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Linked In"
-        ],
-        "operation": [
-          "LinkedIn Product"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /linkedin/showcase/{id}",
     "name": "operation",
     "type": "notice",
@@ -7612,31 +10569,6 @@
     "description": "LinkedIn Showcase Page ID",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Linked In"
-        ],
-        "operation": [
-          "LinkedIn Showcase"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -7787,31 +10719,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Reddit"
-        ],
-        "operation": [
-          "Reddit Comments"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /reddit/post/{id}",
     "name": "operation",
     "type": "notice",
@@ -7837,31 +10744,6 @@
     "description": "Reddit post id or t3_ id",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Reddit"
-        ],
-        "operation": [
-          "Reddit Post"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -8092,31 +10974,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Reddit"
-        ],
-        "operation": [
-          "Reddit Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /reddit/subreddit/{subreddit}/posts",
     "name": "operation",
     "type": "notice",
@@ -8298,31 +11155,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Reddit"
-        ],
-        "operation": [
-          "Reddit Subreddit Posts"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /reddit/user/{username}/posts",
     "name": "operation",
     "type": "notice",
@@ -8410,26 +11242,1696 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
+    "displayName": "GET /rottentomatoes/movie",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
     "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Rotten Tomatoes"
+        ],
+        "operation": [
+          "Rotten Tomatoes Movie"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Path",
+    "name": "path",
+    "description": "Rotten Tomatoes movie path",
+    "default": "/m/inception",
     "type": "string",
     "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
+      "send": {
+        "type": "query",
+        "property": "path",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
       }
     },
     "displayOptions": {
       "show": {
         "resource": [
-          "Reddit"
+          "Rotten Tomatoes"
         ],
         "operation": [
-          "Reddit User Posts"
+          "Rotten Tomatoes Movie"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Url",
+    "name": "url",
+    "description": "Absolute https://www.rottentomatoes.com movie URL",
+    "default": "https://www.rottentomatoes.com/m/inception",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "url",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Rotten Tomatoes"
+        ],
+        "operation": [
+          "Rotten Tomatoes Movie"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /rottentomatoes/movie/reviews",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Rotten Tomatoes"
+        ],
+        "operation": [
+          "Rotten Tomatoes Movie Reviews"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Path",
+    "name": "path",
+    "description": "Rotten Tomatoes movie path",
+    "default": "/m/inception",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "path",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Rotten Tomatoes"
+        ],
+        "operation": [
+          "Rotten Tomatoes Movie Reviews"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Url",
+    "name": "url",
+    "description": "Absolute https://www.rottentomatoes.com movie URL",
+    "default": "https://www.rottentomatoes.com/m/inception",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "url",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Rotten Tomatoes"
+        ],
+        "operation": [
+          "Rotten Tomatoes Movie Reviews"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Type",
+    "name": "type",
+    "description": "Review type: critics, top-critics, audience, verified-audience",
+    "default": "critics",
+    "type": "options",
+    "options": [
+      {
+        "name": "Critics",
+        "value": "critics"
+      },
+      {
+        "name": "Top Critics",
+        "value": "top-critics"
+      },
+      {
+        "name": "Audience",
+        "value": "audience"
+      },
+      {
+        "name": "Verified Audience",
+        "value": "verified-audience"
+      }
+    ],
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "type",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Rotten Tomatoes"
+        ],
+        "operation": [
+          "Rotten Tomatoes Movie Reviews"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Limit",
+    "name": "limit",
+    "description": "Reviews to return, default 10, max 20",
+    "default": 10,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "limit",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Rotten Tomatoes"
+        ],
+        "operation": [
+          "Rotten Tomatoes Movie Reviews"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "After",
+    "name": "after",
+    "description": "Pagination cursor from data.page_info.end_cursor",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "after",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Rotten Tomatoes"
+        ],
+        "operation": [
+          "Rotten Tomatoes Movie Reviews"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /rottentomatoes/search",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Rotten Tomatoes"
+        ],
+        "operation": [
+          "Rotten Tomatoes Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Query",
+    "name": "query",
+    "required": true,
+    "description": "Search query",
+    "default": "inception",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "query",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Rotten Tomatoes"
+        ],
+        "operation": [
+          "Rotten Tomatoes Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Limit",
+    "name": "limit",
+    "description": "Rows to return, default 10, max 20",
+    "default": 10,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "limit",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Rotten Tomatoes"
+        ],
+        "operation": [
+          "Rotten Tomatoes Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /rottentomatoes/series",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Rotten Tomatoes"
+        ],
+        "operation": [
+          "Rotten Tomatoes Series"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Path",
+    "name": "path",
+    "description": "Rotten Tomatoes series path",
+    "default": "/tv/breaking_bad",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "path",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Rotten Tomatoes"
+        ],
+        "operation": [
+          "Rotten Tomatoes Series"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Url",
+    "name": "url",
+    "description": "Absolute https://www.rottentomatoes.com series URL",
+    "default": "https://www.rottentomatoes.com/tv/breaking_bad",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "url",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Rotten Tomatoes"
+        ],
+        "operation": [
+          "Rotten Tomatoes Series"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /shop-app/products/{id}",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shop App"
+        ],
+        "operation": [
+          "Shop App Product"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Id",
+    "name": "id",
+    "required": true,
+    "description": "Product id",
+    "default": "4596217053229",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shop App"
+        ],
+        "operation": [
+          "Shop App Product"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Variant Id",
+    "name": "variant_id",
+    "description": "Variant id",
+    "default": "34761278160941",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "variant_id",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shop App"
+        ],
+        "operation": [
+          "Shop App Product"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /shop-app/products/{id}/reviews",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shop App"
+        ],
+        "operation": [
+          "Shop App Product Reviews"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Id",
+    "name": "id",
+    "required": true,
+    "description": "Product id",
+    "default": "4596217053229",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shop App"
+        ],
+        "operation": [
+          "Shop App Product Reviews"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Limit",
+    "name": "limit",
+    "description": "Maximum reviews, defaults to 20 and supports up to 50",
+    "default": 20,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "limit",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shop App"
+        ],
+        "operation": [
+          "Shop App Product Reviews"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /shop-app/search",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shop App"
+        ],
+        "operation": [
+          "Shop App Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Query",
+    "name": "query",
+    "required": true,
+    "description": "Search query",
+    "default": "sneakers",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "query",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shop App"
+        ],
+        "operation": [
+          "Shop App Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Limit",
+    "name": "limit",
+    "description": "Maximum products, defaults to 20 and supports up to 50",
+    "default": 20,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "limit",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shop App"
+        ],
+        "operation": [
+          "Shop App Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "In Stock",
+    "name": "in_stock",
+    "description": "Request in-stock products",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "in_stock",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shop App"
+        ],
+        "operation": [
+          "Shop App Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "On Sale",
+    "name": "on_sale",
+    "description": "Request sale products",
+    "default": false,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "on_sale",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shop App"
+        ],
+        "operation": [
+          "Shop App Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Deep Search",
+    "name": "deep_search",
+    "description": "Enable Shop.app deep search mode",
+    "default": false,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "deep_search",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shop App"
+        ],
+        "operation": [
+          "Shop App Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /shop-app/shops/{handle}",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shop App"
+        ],
+        "operation": [
+          "Shop App Shop"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Handle",
+    "name": "handle",
+    "required": true,
+    "description": "Shop handle",
+    "default": "marcnolan",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shop App"
+        ],
+        "operation": [
+          "Shop App Shop"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /shopify/collections",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shopify"
+        ],
+        "operation": [
+          "Shopify Collections"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Url",
+    "name": "url",
+    "required": true,
+    "description": "Shopify storefront URL",
+    "default": "https://www.allbirds.com",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "url",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shopify"
+        ],
+        "operation": [
+          "Shopify Collections"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Page",
+    "name": "page",
+    "description": "1-based page, defaults to 1",
+    "default": 1,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "page",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shopify"
+        ],
+        "operation": [
+          "Shopify Collections"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Limit",
+    "name": "limit",
+    "description": "Maximum collections, defaults to 50 and supports up to 250",
+    "default": 50,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "limit",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shopify"
+        ],
+        "operation": [
+          "Shopify Collections"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /shopify/products",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shopify"
+        ],
+        "operation": [
+          "Shopify Products"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Url",
+    "name": "url",
+    "required": true,
+    "description": "Shopify storefront URL",
+    "default": "https://www.allbirds.com",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "url",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shopify"
+        ],
+        "operation": [
+          "Shopify Products"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Page",
+    "name": "page",
+    "description": "1-based page, defaults to 1",
+    "default": 1,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "page",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shopify"
+        ],
+        "operation": [
+          "Shopify Products"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Limit",
+    "name": "limit",
+    "description": "Maximum products, defaults to 50 and supports up to 250",
+    "default": 50,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "limit",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shopify"
+        ],
+        "operation": [
+          "Shopify Products"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /shopify/products/{handle}",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shopify"
+        ],
+        "operation": [
+          "Shopify Product"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Handle",
+    "name": "handle",
+    "required": true,
+    "description": "Product handle",
+    "default": "mens-wool-runners",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shopify"
+        ],
+        "operation": [
+          "Shopify Product"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Url",
+    "name": "url",
+    "required": true,
+    "description": "Shopify storefront URL",
+    "default": "https://www.allbirds.com",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "url",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shopify"
+        ],
+        "operation": [
+          "Shopify Product"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /shopify/store",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shopify"
+        ],
+        "operation": [
+          "Shopify Store"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Url",
+    "name": "url",
+    "required": true,
+    "description": "Shopify storefront URL",
+    "default": "https://www.allbirds.com",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "url",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Shopify"
+        ],
+        "operation": [
+          "Shopify Store"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /spotify/album",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Album"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Uri",
+    "name": "uri",
+    "description": "Spotify album URI or open.spotify.com album URL",
+    "default": "spotify:album:4aawyAB9vmqN3uQ7FjRGTy",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "uri",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Album"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Id",
+    "name": "id",
+    "description": "Spotify album ID",
+    "default": "4aawyAB9vmqN3uQ7FjRGTy",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "id",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Album"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Offset",
+    "name": "offset",
+    "description": "Track offset",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "offset",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Album"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Limit",
+    "name": "limit",
+    "description": "Track limit, clamped to 1-50",
+    "default": 50,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "limit",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Album"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /spotify/artist",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Artist"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Uri",
+    "name": "uri",
+    "description": "Spotify artist URI or open.spotify.com artist URL",
+    "default": "spotify:artist:0TnOYISbd1XYRBk9myaseg",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "uri",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Artist"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Id",
+    "name": "id",
+    "description": "Spotify artist ID",
+    "default": "0TnOYISbd1XYRBk9myaseg",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "id",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Artist"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /spotify/playlist",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Playlist"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Uri",
+    "name": "uri",
+    "description": "Spotify playlist URI or open.spotify.com playlist URL",
+    "default": "spotify:playlist:37i9dQZEVXbLwpL8TjsxOG",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "uri",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Playlist"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Id",
+    "name": "id",
+    "description": "Spotify playlist ID. Used when uri is omitted",
+    "default": "37i9dQZEVXbLwpL8TjsxOG",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "id",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Playlist"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Offset",
+    "name": "offset",
+    "description": "Playlist item offset",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "offset",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Playlist"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Limit",
+    "name": "limit",
+    "description": "Playlist item limit, clamped to 1-50",
+    "default": 25,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "limit",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Playlist"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Enable Watch Feed Entrypoint",
+    "name": "enable_watch_feed_entrypoint",
+    "description": "Enable watch feed entrypoint",
+    "default": false,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "enable_watch_feed_entrypoint",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Playlist"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Include Episode Content Ratings V 2",
+    "name": "include_episode_content_ratings_v2",
+    "description": "Include Spotify episode content ratings v2",
+    "default": false,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "include_episode_content_ratings_v2",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Playlist"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /spotify/search",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Q",
+    "name": "q",
+    "required": true,
+    "description": "Search term",
+    "default": "hello",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "q",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Offset",
+    "name": "offset",
+    "description": "Search offset",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "offset",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Limit",
+    "name": "limit",
+    "description": "Result limit per section, clamped to 1-50",
+    "default": 10,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "limit",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Number Of Top Results",
+    "name": "number_of_top_results",
+    "description": "Top result limit, clamped to 1-50",
+    "default": 5,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "number_of_top_results",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Include Audiobooks",
+    "name": "include_audiobooks",
+    "description": "Include audiobook results",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "include_audiobooks",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Include Artist Has Concerts Field",
+    "name": "include_artist_has_concerts_field",
+    "description": "Include artist concert availability fields",
+    "default": false,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "include_artist_has_concerts_field",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Include Pre Releases",
+    "name": "include_pre_releases",
+    "description": "Include pre-release results",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "include_pre_releases",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Include Album Pre Releases",
+    "name": "include_album_pre_releases",
+    "description": "Include album pre-release results",
+    "default": false,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "include_album_pre_releases",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Include Authors",
+    "name": "include_authors",
+    "description": "Include authors",
+    "default": false,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "include_authors",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Include Episode Content Ratings V 2",
+    "name": "include_episode_content_ratings_v2",
+    "description": "Include Spotify episode content ratings v2",
+    "default": false,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "include_episode_content_ratings_v2",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Is Prefix",
+    "name": "is_prefix",
+    "description": "Treat the search term as a prefix",
+    "default": false,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "is_prefix",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /spotify/track",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Track"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Uri",
+    "name": "uri",
+    "description": "Spotify track URI or open.spotify.com track URL",
+    "default": "spotify:track:4vGg44GdCw3X8i8r01XJH0",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "uri",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Track"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Id",
+    "name": "id",
+    "description": "Spotify track ID. Used when uri is omitted",
+    "default": "4vGg44GdCw3X8i8r01XJH0",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "id",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Spotify"
+        ],
+        "operation": [
+          "Spotify Track"
         ]
       }
     }
@@ -8442,31 +12944,6 @@
       "theme": "info"
     },
     "default": "",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Tik Tok"
-        ],
-        "operation": [
-          "TikTok Video Comments"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -8549,31 +13026,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Tik Tok"
-        ],
-        "operation": [
-          "TikTok Post"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "Id",
     "name": "id",
     "required": true,
@@ -8611,31 +13063,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Tik Tok"
-        ],
-        "operation": [
-          "TikTok Profile"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "Handler",
     "name": "handler",
     "required": true,
@@ -8661,31 +13088,6 @@
       "theme": "info"
     },
     "default": "",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Tik Tok"
-        ],
-        "operation": [
-          "TikTok Search"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -8894,31 +13296,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Trustpilot"
-        ],
-        "operation": [
-          "Trustpilot Business Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /trustpilot/business/{slug}",
     "name": "operation",
     "type": "notice",
@@ -8944,31 +13321,6 @@
     "description": "Trustpilot business slug",
     "default": "openai.com",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Trustpilot"
-        ],
-        "operation": [
-          "Trustpilot Business"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -9218,31 +13570,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Trustpilot"
-        ],
-        "operation": [
-          "Trustpilot Business Reviews"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "POST /web/scrape",
     "name": "operation",
     "type": "notice",
@@ -9250,31 +13577,6 @@
       "theme": "info"
     },
     "default": "",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Web"
-        ],
-        "operation": [
-          "Web Scrape"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -9522,6 +13824,711 @@
     }
   },
   {
+    "displayName": "GET /yahoo-finance/search",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Q",
+    "name": "q",
+    "required": true,
+    "description": "Ticker symbol or company name",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "q",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Quotes Count",
+    "name": "quotes_count",
+    "description": "Quote result count",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "quotes_count",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "News Count",
+    "name": "news_count",
+    "description": "News result count",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "news_count",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Lists Count",
+    "name": "lists_count",
+    "description": "List result count",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "lists_count",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Include Research",
+    "name": "include_research",
+    "description": "Include research reports when Yahoo returns them",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "include_research",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Enable Fuzzy Query",
+    "name": "enable_fuzzy_query",
+    "description": "Enable fuzzy matching",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "enable_fuzzy_query",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /yahoo-finance/ticker/{symbol}/financials",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker Financials"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Symbol",
+    "name": "symbol",
+    "required": true,
+    "description": "Yahoo Finance symbol such as AAPL",
+    "default": "",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker Financials"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Statement",
+    "name": "statement",
+    "description": "income, balance-sheet, or cash-flow",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "statement",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker Financials"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Period",
+    "name": "period",
+    "description": "annual, quarterly, or trailing",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "period",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker Financials"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /yahoo-finance/ticker/{symbol}/history",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker History"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Symbol",
+    "name": "symbol",
+    "required": true,
+    "description": "Yahoo Finance symbol such as AAPL",
+    "default": "",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker History"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Period",
+    "name": "period",
+    "description": "Range such as 1d, 1mo, 1y, max",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "period",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker History"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Start",
+    "name": "start",
+    "description": "Unix seconds, RFC3339, or YYYY-MM-DD",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "start",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker History"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "End",
+    "name": "end",
+    "description": "Unix seconds, RFC3339, or YYYY-MM-DD",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "end",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker History"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Interval",
+    "name": "interval",
+    "description": "Interval such as 1d, 1h, 5m",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "interval",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker History"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Include Prepost",
+    "name": "include_prepost",
+    "description": "Include pre/post market data",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "include_prepost",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker History"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Include Actions",
+    "name": "include_actions",
+    "description": "Include dividends, splits, and capital gains",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "include_actions",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker History"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Auto Adjust",
+    "name": "auto_adjust",
+    "description": "Adjust OHLC prices with adjusted close",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "auto_adjust",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker History"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Back Adjust",
+    "name": "back_adjust",
+    "description": "Back-adjust OHLC prices while keeping close",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "back_adjust",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker History"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Keepna",
+    "name": "keepna",
+    "description": "Keep fully empty chart rows",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "keepna",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker History"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Rounding",
+    "name": "rounding",
+    "description": "Round prices to two decimals",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "rounding",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker History"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /yahoo-finance/ticker/{symbol}/info",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker Info"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Symbol",
+    "name": "symbol",
+    "required": true,
+    "description": "Yahoo Finance symbol such as AAPL",
+    "default": "",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker Info"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /yahoo-finance/ticker/{symbol}/news",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker News"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Symbol",
+    "name": "symbol",
+    "required": true,
+    "description": "Yahoo Finance symbol such as AAPL",
+    "default": "",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker News"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Count",
+    "name": "count",
+    "description": "News result count",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "count",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker News"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Tab",
+    "name": "tab",
+    "description": "News tab: news, all, or press_releases",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "tab",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker News"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /yahoo-finance/ticker/{symbol}/quote",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker Quote"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Symbol",
+    "name": "symbol",
+    "required": true,
+    "description": "Yahoo Finance symbol such as AAPL",
+    "default": "",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Yahoo Finance"
+        ],
+        "operation": [
+          "Yahoo Finance Ticker Quote"
+        ]
+      }
+    }
+  },
+  {
     "displayName": "GET /youtube/channel/{id}/videos",
     "name": "operation",
     "type": "notice",
@@ -9584,31 +14591,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "You Tube"
-        ],
-        "operation": [
-          "YouTube Channel Videos"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /youtube/comments/{id}",
     "name": "operation",
     "type": "notice",
@@ -9657,31 +14639,6 @@
         "property": "continuation_token",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "You Tube"
-        ],
-        "operation": [
-          "YouTube Comments"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -10012,31 +14969,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "You Tube"
-        ],
-        "operation": [
-          "YouTube Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /youtube/transcript/{id}",
     "name": "operation",
     "type": "notice",
@@ -10192,31 +15124,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "You Tube"
-        ],
-        "operation": [
-          "YouTube Transcript"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /youtube/video/{id}",
     "name": "operation",
     "type": "notice",
@@ -10242,31 +15149,6 @@
     "description": "YouTube video ID (11-char code)",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "You Tube"
-        ],
-        "operation": [
-          "YouTube Video"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -10374,31 +15256,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Zillow"
-        ],
-        "operation": [
-          "Zillow Autocomplete"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /zillow/property/{zpid}",
     "name": "operation",
     "type": "notice",
@@ -10424,31 +15281,6 @@
     "description": "Zillow property id",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Zillow"
-        ],
-        "operation": [
-          "Zillow Property"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -10692,31 +15524,6 @@
         "property": "north",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Zillow"
-        ],
-        "operation": [
-          "Zillow Search"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
