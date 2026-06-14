@@ -4,9 +4,11 @@ An [n8n](https://n8n.io) community node for [Crawlora](https://crawlora.net) —
 data from the public web (search, maps, e‑commerce, social, finance, page content, and more) without
 maintaining your own parsers.
 
-This node exposes the Crawlora API as n8n **Resources** (one per data source — Web, Google, Amazon,
-YouTube, Maps, Finance, …) and **Operations** (the endpoints under each). It is generated from the
-Crawlora OpenAPI spec, so it stays in sync with the API.
+This node exposes the Crawlora API as n8n **Resources** (Web scraping, Google / SERP, Amazon, eBay,
+YouTube, Reddit, TikTok, Instagram, LinkedIn, the App Store & Google Play, Trustpilot, Zillow, Maps
+datasets, geocoding) and **Operations** (the endpoints under each). It ships a **curated** set of the
+most-used sources — more are added by demand. Properties are generated from the Crawlora OpenAPI spec,
+so they stay in sync with the API.
 
 ## Installation
 

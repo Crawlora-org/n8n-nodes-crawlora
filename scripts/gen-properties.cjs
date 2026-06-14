@@ -19,7 +19,50 @@
 const fs = require('fs');
 const path = require('path');
 const converter = require('swagger2openapi');
-const { N8NPropertiesBuilder } = require('@devlikeapro/n8n-openapi-node');
+const {
+	N8NPropertiesBuilder,
+	DefaultResourceParser,
+	DefaultOperationParser,
+} = require('@devlikeapro/n8n-openapi-node');
+
+// The builder humanizes tags/operationIds with lodash.startCase, which mangles brand
+// names ("TikTok" -> "Tik Tok", "eBay" -> "E Bay", "YouTube" -> "You Tube"). Override the
+// resource/operation display names so the verified node reads cleanly (n8n UX guideline:
+// resource Name in Title Case). Only the display Name changes — internal values stay,
+// so operation<->resource wiring is untouched.
+const RESOURCE_NAMES = {
+	TikTok: 'TikTok',
+	YouTube: 'YouTube',
+	eBay: 'eBay',
+	LinkedIn: 'LinkedIn',
+	GooglePlay: 'Google Play',
+	AppStore: 'App Store',
+};
+const BRAND_FIXES = [
+	[/\bTik Tok\b/g, 'TikTok'],
+	[/\bYou Tube\b/g, 'YouTube'],
+	[/\bE Bay\b/g, 'eBay'],
+	[/\bLinked In\b/g, 'LinkedIn'],
+	[/\bTiktok\b/g, 'TikTok'],
+	[/\bYoutube\b/g, 'YouTube'],
+	[/\bEbay\b/g, 'eBay'],
+	[/\bLinkedin\b/g, 'LinkedIn'],
+];
+function fixBrands(s) {
+	let out = s;
+	for (const [re, rep] of BRAND_FIXES) out = out.replace(re, rep);
+	return out;
+}
+class ResourceParser extends DefaultResourceParser {
+	name(tag) {
+		return RESOURCE_NAMES[tag.name] || fixBrands(super.name(tag));
+	}
+}
+class OperationParser extends DefaultOperationParser {
+	name(operation, context) {
+		return fixBrands(super.name(operation, context));
+	}
+}
 
 const SWAGGER_PATH = process.env.SWAGGER_PATH;
 const OUT_DIR = path.resolve(__dirname, '../nodes/Crawlora');
@@ -44,6 +87,38 @@ function loadRedactions() {
 	}
 }
 const TEXT_REPLACEMENTS = loadRedactions();
+
+// Curated allow-list for the VERIFIED node (resource tag -> Set of operationIds, or "*").
+// n8n verifies curated single-vendor nodes (SerpApi ~37 ops, ScrapingBee ~17); a 430-op node
+// is too sprawling to review. Anything not listed is dropped. Build the full surface with
+// CURATE=0 npm run gen. See webscraping-fe docs/n8n-verified-node-packaging-plan-2026-06.md.
+function loadCuration() {
+	if (process.env.CURATE === '0') return null;
+	const f = path.resolve(__dirname, 'curation.json');
+	if (!fs.existsSync(f)) return null;
+	try {
+		const raw = JSON.parse(fs.readFileSync(f, 'utf8'));
+		const map = {};
+		for (const [tag, ops] of Object.entries(raw)) {
+			if (tag.startsWith('_')) continue; // skip _comment and the like
+			map[tag] = ops === '*' ? '*' : new Set(ops);
+		}
+		return map;
+	} catch (e) {
+		console.warn(`Ignoring curation.json (${e.message}).`);
+		return null;
+	}
+}
+const CURATION = loadCuration();
+
+function isCurated(op) {
+	if (!CURATION) return true;
+	const tags = (op && op.tags) || [];
+	return tags.some((t) => {
+		const allow = CURATION[t];
+		return allow === '*' || (allow && allow.has(op.operationId));
+	});
+}
 
 function sanitize(text) {
 	if (typeof text !== 'string') return text;
@@ -116,9 +191,28 @@ async function main() {
 			if (Object.keys(spec.paths[p]).length === 0) delete spec.paths[p];
 		}
 
+		// Keep only the curated allow-list so the published node stays reviewable
+		// (build the full surface with CURATE=0 npm run gen).
+		let curatedOut = 0;
+		if (CURATION) {
+			for (const cp of Object.keys(spec.paths || {})) {
+				for (const cm of Object.keys(spec.paths[cp])) {
+					if (!HTTP_METHODS.has(cm.toLowerCase())) continue;
+					if (!isCurated(spec.paths[cp][cm])) {
+						delete spec.paths[cp][cm];
+						curatedOut++;
+					}
+				}
+				if (Object.keys(spec.paths[cp]).length === 0) delete spec.paths[cp];
+			}
+		}
+
 		fs.writeFileSync(path.join(OUT_DIR, 'openapi.json'), JSON.stringify(spec, null, 2));
 
-		const builder = new N8NPropertiesBuilder(spec, {});
+		const builder = new N8NPropertiesBuilder(spec, {
+			resource: new ResourceParser(),
+			operation: new OperationParser(),
+		});
 		const properties = builder.build();
 
 		fs.writeFileSync(path.join(OUT_DIR, 'properties.json'), JSON.stringify(properties, null, 2));
@@ -126,7 +220,9 @@ async function main() {
 		const resources = (properties.find((p) => p.name === 'resource') || {}).options || [];
 		console.log(
 			`Generated ${properties.length} properties across ${resources.length} resources ` +
-				`(${removed} internal/account/deprecated operations skipped).`,
+				`(${removed} internal/account/deprecated operations skipped` +
+				(CURATION ? `, ${curatedOut} dropped by curation allow-list` : '') +
+				`).`,
 		);
 	});
 }

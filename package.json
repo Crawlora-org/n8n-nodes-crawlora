@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-crawlora",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "n8n community node for Crawlora — structured web data from the public web.",
   "keywords": [
     "n8n-community-node-package",
@@ -39,6 +39,9 @@
     "nodes": [
       "dist/nodes/Crawlora/Crawlora.node.js"
     ]
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
   },
   "devDependencies": {
     "@devlikeapro/n8n-openapi-node": "^0.1.4",

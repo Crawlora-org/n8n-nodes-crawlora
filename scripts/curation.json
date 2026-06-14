@@ -1,0 +1,39 @@
+{
+  "_comment": "Curated allow-list for the VERIFIED n8n node. Keys are resource tags; values are an array of operationIds to keep, or \"*\" for all ops in that tag. Anything not listed is dropped at build time. n8n verifies curated single-vendor nodes (SerpApi ~37 ops, ScrapingBee ~17) — a 430-op node is too sprawling to review. Tune this list to grow the node by demand; the full surface stays available via `CURATE=0 npm run gen`. See webscraping-fe docs/n8n-verified-node-packaging-plan-2026-06.md.",
+  "Web": "*",
+  "Google": [
+    "google-search",
+    "google-news",
+    "google-videos",
+    "google-suggest",
+    "google-jobs",
+    "google-map-search",
+    "google-map-place",
+    "google-trends-explore"
+  ],
+  "Datasets": "*",
+  "Geocoding": "*",
+  "Amazon": "*",
+  "eBay": ["ebay-search", "ebay-item", "ebay-seller"],
+  "YouTube": [
+    "youtube-search",
+    "youtube-video",
+    "youtube-channel-videos",
+    "youtube-comments",
+    "youtube-transcript"
+  ],
+  "Reddit": [
+    "reddit-search",
+    "reddit-subreddit-posts",
+    "reddit-post",
+    "reddit-comments",
+    "reddit-user-posts"
+  ],
+  "TikTok": ["tiktok-search", "tiktok-profile", "tiktok-post", "tiktok-video-comments"],
+  "Instagram": "*",
+  "LinkedIn": "*",
+  "Trustpilot": ["trustpilot-business-search", "trustpilot-business", "trustpilot-business-reviews"],
+  "AppStore": ["appstore-search", "appstore-app", "appstore-reviews"],
+  "GooglePlay": ["googleplay-search", "googleplay-app", "googleplay-reviews"],
+  "Zillow": "*"
+}
