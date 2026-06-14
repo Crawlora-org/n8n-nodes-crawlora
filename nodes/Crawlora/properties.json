@@ -897,7 +897,7 @@
         "name": "Brand Retrieve",
         "value": "Brand Retrieve",
         "action": "Retrieve brand data by domain",
-        "description": "Fetches a domain's homepage and extracts a normalized brand profile (title, description, colors, logos, backdrops, socials, links, and any schema.org organization data). Enrichment-only fields that are not present in the page markup are returned as null.",
+        "description": "Fetches a domain's homepage and Web App Manifest and extracts a normalized brand profile (title, description, brand colors normalized to hex, logos and icons ranked best-first, backdrops, socials, links, and any schema.org organization data). Enrichment-only fields that are not present in the page markup are returned as null.",
         "routing": {
           "request": {
             "method": "GET",
