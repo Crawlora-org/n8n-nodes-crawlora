@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-crawlora",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "n8n community node for Crawlora — structured web data from the public web.",
   "keywords": [
     "n8n-community-node-package",
@@ -12,6 +12,11 @@
   ],
   "license": "MIT",
   "homepage": "https://crawlora.net",
+  "author": {
+    "name": "Crawlora",
+    "email": "tonywang.data@gmail.com",
+    "url": "https://crawlora.net"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Crawlora-org/n8n-nodes-crawlora.git"
