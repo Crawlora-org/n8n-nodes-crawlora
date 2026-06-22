@@ -1,0 +1,266 @@
+{
+  "name": "Google Maps → verified emails → Google Sheets (Crawlora)",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Google Maps → verified emails → Google Sheets\n\nPulls local businesses from Crawlora's Google Maps dataset (only the ones that have a website), finds each site's public business emails with the Contact API, and appends outreach-ready rows to your sheet. Crawlora handles the anti-bot scraping, so this does not break like DIY HTML-parsing flows.\n\n### Setup (3 steps)\n1. Add an **HTTP Header Auth** credential named `Crawlora API (x-api-key)` — Header **Name** `x-api-key`, **Value** = your key from https://crawlora.net (free: 2,000 credits/mo, no card).\n2. Edit the search in **Crawlora: Google Maps dataset search** (q / city / state / category / filters).\n3. Pick your spreadsheet in **Append lead to Google Sheet**.\n\nEach business with a website costs one Contact API call — you are charged on success.",
+        "height": 430,
+        "width": 470,
+        "color": 4
+      },
+      "id": "11111111-1111-4111-8111-0000000000a1",
+      "name": "Setup",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -360,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### Why a dataset + Contact API, not raw scraping\n\nGoogle Maps listings have a name, phone, and website — but **no email**. This flow filters to businesses that have a website (`has_website=true`), then enriches each site for public emails, phones, and socials, each with a verification status. No proxies, no brittle selectors to maintain.",
+        "height": 220,
+        "width": 470,
+        "color": 7
+      },
+      "id": "11111111-1111-4111-8111-0000000000a2",
+      "name": "Why this is reliable",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -360,
+        580
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "11111111-1111-4111-8111-000000000001",
+      "name": "When clicking 'Execute workflow'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.crawlora.net/api/v1/datasets/google-map-businesses/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "coffee shop"
+            },
+            {
+              "name": "city",
+              "value": "Austin"
+            },
+            {
+              "name": "state",
+              "value": "Texas"
+            },
+            {
+              "name": "country",
+              "value": "United States"
+            },
+            {
+              "name": "has_website",
+              "value": "true"
+            },
+            {
+              "name": "sort",
+              "value": "review_count_desc"
+            },
+            {
+              "name": "page_size",
+              "value": "20"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "11111111-1111-4111-8111-000000000002",
+      "name": "Crawlora: Google Maps dataset search",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        460,
+        360
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_WITH_CRAWLORA_CREDENTIAL",
+          "name": "Crawlora API (x-api-key)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data.items",
+        "options": {}
+      },
+      "id": "11111111-1111-4111-8111-000000000003",
+      "name": "Split out businesses",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        680,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.crawlora.net/api/v1/contact",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $json.website }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "11111111-1111-4111-8111-000000000004",
+      "name": "Crawlora: find emails (Contact API)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        900,
+        360
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_WITH_CRAWLORA_CREDENTIAL",
+          "name": "Crawlora API (x-api-key)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Combine each business (from the dataset search) with the emails found by the Contact API.\nconst biz = $('Split out businesses').item.json;\nconst contact = $json.data || {};\nconst emails = contact.emails || [];\n\n// Prefer a personal address; otherwise the first public one (often info@ / sales@).\nconst primary = emails.find((e) => e.type === 'personal') || emails[0] || {};\nconst socials = (contact.socials || [])\n  .map((s) => (typeof s === 'string' ? s : s.url || s.handle || ''))\n  .filter(Boolean);\n\nreturn {\n  json: {\n    business: biz.name || '',\n    category: Array.isArray(biz.category) ? biz.category.join(', ') : biz.category || '',\n    address: biz.address || '',\n    city: biz.city || '',\n    state: biz.state || '',\n    phone: biz.phone || '',\n    website: biz.website || '',\n    rating: biz.rating ?? '',\n    reviews: biz.review_count ?? '',\n    email: primary.email || '',\n    email_type: primary.type || '',\n    email_status: primary.status || '',\n    all_emails: emails.map((e) => e.email).join(', '),\n    socials: socials.join(', '),\n    place_id: biz.place_id || '',\n  },\n};"
+      },
+      "id": "11111111-1111-4111-8111-000000000005",
+      "name": "Build lead row",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Sheet1",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "11111111-1111-4111-8111-000000000006",
+      "name": "Append lead to Google Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1340,
+        360
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_WITH_GOOGLE_CREDENTIAL",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When clicking 'Execute workflow'": {
+      "main": [
+        [
+          {
+            "node": "Crawlora: Google Maps dataset search",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crawlora: Google Maps dataset search": {
+      "main": [
+        [
+          {
+            "node": "Split out businesses",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split out businesses": {
+      "main": [
+        [
+          {
+            "node": "Crawlora: find emails (Contact API)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crawlora: find emails (Contact API)": {
+      "main": [
+        [
+          {
+            "node": "Build lead row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build lead row": {
+      "main": [
+        [
+          {
+            "node": "Append lead to Google Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

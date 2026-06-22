@@ -43,6 +43,13 @@ operations directly.
 > Prefer MCP? Crawlora also ships a hosted MCP server with the full catalog — use n8n's **MCP Client**
 > node to call every Crawlora tool from an AI Agent workflow. See https://docs.crawlora.net.
 
+## Workflow templates
+
+Ready-to-import example workflows live in [`templates/`](./templates):
+
+- **[Google Maps → verified emails → Google Sheets](./templates/google-maps-email-leads.json)** —
+  build a local-business lead list with real emails (Maps businesses dataset → Contact API → Sheet).
+
 ## Development
 
 The node's properties are **generated at build time** from the Crawlora OpenAPI spec and committed as
