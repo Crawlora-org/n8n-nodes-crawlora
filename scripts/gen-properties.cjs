@@ -38,6 +38,7 @@ const RESOURCE_NAMES = {
 	GooglePlay: 'Google Play',
 	AppStore: 'App Store',
 	IMDb: 'IMDb',
+	GitHub: 'GitHub',
 	'Shop.app': 'Shop.app',
 };
 const BRAND_FIXES = [

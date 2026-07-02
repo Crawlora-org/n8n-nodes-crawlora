@@ -43,6 +43,8 @@
   "TikTok": ["tiktok-search", "tiktok-profile", "tiktok-post", "tiktok-video-comments"],
   "Instagram": "*",
   "LinkedIn": "*",
+  "GitHub": "*",
+  "X": "*",
 
   "Trustpilot": ["trustpilot-business-search", "trustpilot-business", "trustpilot-business-reviews"],
 
