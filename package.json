@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-crawlora",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "n8n community node for Crawlora — structured web data from the public web.",
   "keywords": [
     "n8n-community-node-package",
