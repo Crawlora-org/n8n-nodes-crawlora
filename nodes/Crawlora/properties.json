@@ -467,6 +467,54 @@
         }
       },
       {
+        "name": "Datasets Airbnb Markets Facets",
+        "value": "Datasets Airbnb Markets Facets",
+        "action": "Facet the Airbnb markets dataset",
+        "description": "Returns suppressed distribution counts over the Airbnb markets dataset, honoring the same filters as search. Facet enum: `country`, `market`, `currency`, `superhost`, `rating_band`, `review_band`. group_by enum: `country`, `market`.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/datasets/airbnb-markets/facets"
+          }
+        }
+      },
+      {
+        "name": "Datasets Airbnb Markets Item",
+        "value": "Datasets Airbnb Markets Item",
+        "action": "Get an Airbnb market from the dataset",
+        "description": "Returns one country's full aggregate Airbnb market profile from dataset id enum value `airbnb-markets` — headline supply, Superhost share, ratings, its top metros, bounding box and per-currency nightly-price percentiles. Aggregate-only. Returns 404 for a country below the suppression floor.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/datasets/airbnb-markets/items/{{$parameter[\"country\"]}}"
+          }
+        }
+      },
+      {
+        "name": "Datasets Airbnb Markets Nearby",
+        "value": "Datasets Airbnb Markets Nearby",
+        "action": "Airbnb market density near a coordinate",
+        "description": "Returns an aggregate geohash-grid density map of Airbnb listings within a radius of a coordinate, from dataset id enum value `airbnb-markets`. Each cell reports a centroid, listing count and Superhost share; thin cells are suppressed. Aggregate-only.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/datasets/airbnb-markets/nearby"
+          }
+        }
+      },
+      {
+        "name": "Datasets Airbnb Markets Search",
+        "value": "Datasets Airbnb Markets Search",
+        "action": "Search the Airbnb markets dataset",
+        "description": "Returns aggregate Airbnb short-term-rental market rollups from the dataset id enum value `airbnb-markets`. Aggregate-only: each row is a market cell (a country or a metro), never an individual listing. Thin cells are suppressed. group_by enum: `country`, `market`. Sort enum: `listings_desc`, `superhost_pct_desc`, `rating_desc`, `key_asc`.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/datasets/airbnb-markets/search"
+          }
+        }
+      },
+      {
         "name": "Datasets Apps Charts Search",
         "value": "Datasets Apps Charts Search",
         "action": "Search the app-charts dataset",
@@ -578,7 +626,7 @@
         "name": "Datasets Google Map Businesses Item",
         "value": "Datasets Google Map Businesses Item",
         "action": "Get a stored Google Maps business",
-        "description": "Returns one stored Google Maps business by Google place_id from dataset id enum value `google-map-businesses`. The `category` field is a Google Maps type token in lower-case snake_case (e.g. `dentist`, `bus_stop`, `atm`). A `rating` of `0` means no aggregate rating is available for that business (not a literal zero-star score); read it together with `review_count`.",
+        "description": "Returns one stored Google Maps business by Google place_id from dataset id enum value `google-map-businesses`. The `category` field is a Google Maps type token in lower-case snake_case (e.g. `dentist`, `bus_stop`, `atm`). A `rating` of `null` means no aggregate rating is available for that business; read it together with `review_count`. Locationless service-area businesses (online/mobile/home-based) have a `null` `geo`.",
         "routing": {
           "request": {
             "method": "GET",
@@ -602,7 +650,7 @@
         "name": "Datasets Google Map Businesses Search",
         "value": "Datasets Google Map Businesses Search",
         "action": "Search stored Google Maps businesses",
-        "description": "Searches Google Maps business records stored in a search index. Sort enum: `relevance`, `updated_at_desc`, `rating_desc`, `review_count_desc`, `distance_asc`. `category` is a Google Maps type token in lower-case snake_case (e.g. `dentist`, `bus_stop`, `atm`), both as the `category` filter and in each result's `category` field. A `rating` of `0` means no aggregate rating is available for that business (too few reviews, or a place type Google does not rate) — it is not a literal zero-star score; read it together with `review_count`, and note that `rating_desc` sorts unrated businesses last and `min_rating` above 0 excludes them.",
+        "description": "Searches Google Maps business records stored in a search index. Sort enum: `relevance`, `updated_at_desc`, `rating_desc`, `review_count_desc`, `distance_asc`. `category` is a Google Maps type token in lower-case snake_case (e.g. `dentist`, `bus_stop`, `atm`), both as the `category` filter and in each result's `category` field. A `rating` of `null` means no aggregate rating is available for that business (too few reviews, or a place type Google does not rate) — it is never a literal zero-star score; read it together with `review_count`, and note that `rating_desc` sorts unrated businesses last and `min_rating` above 0 excludes them. Use `has_geo=false` to isolate locationless service-area businesses (which have a `null` `geo`).",
         "routing": {
           "request": {
             "method": "GET",
@@ -2121,31 +2169,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Amazon"
-        ],
-        "operation": [
-          "Amazon Product"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /amazon/search",
     "name": "operation",
     "type": "notice",
@@ -2241,31 +2264,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Amazon"
-        ],
-        "operation": [
-          "Amazon Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /amazon/suggest/{keyword}",
     "name": "operation",
     "type": "notice",
@@ -2291,31 +2289,6 @@
     "description": "Suggestion prefix",
     "default": "apple",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Amazon"
-        ],
-        "operation": [
-          "Amazon Suggest"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -2458,31 +2431,6 @@
         "property": "ratings",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "App Store"
-        ],
-        "operation": [
-          "App Store App"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -2676,31 +2624,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "App Store"
-        ],
-        "operation": [
-          "App Store Reviews"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /appstore/search",
     "name": "operation",
     "type": "notice",
@@ -2871,31 +2794,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "App Store"
-        ],
-        "operation": [
-          "App Store Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /bing/images",
     "name": "operation",
     "type": "notice",
@@ -3027,31 +2925,6 @@
         "property": "lang",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Bing"
-        ],
-        "operation": [
-          "Bing Images"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -3211,31 +3084,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Bing"
-        ],
-        "operation": [
-          "Bing News"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /bing/search",
     "name": "operation",
     "type": "notice",
@@ -3381,31 +3229,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Bing"
-        ],
-        "operation": [
-          "Bing Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /bing/suggest",
     "name": "operation",
     "type": "notice",
@@ -3512,31 +3335,6 @@
         "property": "lang",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Bing"
-        ],
-        "operation": [
-          "Bing Suggest"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -3682,31 +3480,6 @@
         "property": "lang",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Bing"
-        ],
-        "operation": [
-          "Bing Videos"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -4064,31 +3837,6 @@
         "property": "lang",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Brave"
-        ],
-        "operation": [
-          "Brave Images"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -4561,31 +4309,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Brave"
-        ],
-        "operation": [
-          "Brave News"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /brave/search",
     "name": "operation",
     "type": "notice",
@@ -5019,31 +4742,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Brave"
-        ],
-        "operation": [
-          "Brave Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /brave/suggest",
     "name": "operation",
     "type": "notice",
@@ -5362,31 +5060,6 @@
         "property": "lang",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Brave"
-        ],
-        "operation": [
-          "Brave Suggest"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -5859,31 +5532,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Brave"
-        ],
-        "operation": [
-          "Brave Videos"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "POST /contact",
     "name": "operation",
     "type": "notice",
@@ -5891,31 +5539,6 @@
       "theme": "info"
     },
     "default": "",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Web"
-        ],
-        "operation": [
-          "Contact"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -6045,17 +5668,37 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
+    "displayName": "GET /datasets/airbnb-markets/facets",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Facet",
+    "name": "facet",
     "required": true,
-    "description": "API key required",
+    "description": "Facet enum: country, market, currency, superhost, rating_band, review_band",
     "default": "",
     "type": "string",
     "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
+      "send": {
+        "type": "query",
+        "property": "facet",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
       }
     },
     "displayOptions": {
@@ -6064,7 +5707,785 @@
           "Datasets"
         ],
         "operation": [
-          "Datasets List"
+          "Datasets Airbnb Markets Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Group By",
+    "name": "group_by",
+    "description": "Aggregate cell dimension enum: country, market. Defaults to country",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "group_by",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Country",
+    "name": "country",
+    "description": "Exact ISO-3166-1 alpha-2 country filter, e.g. FR",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "country",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Market",
+    "name": "market",
+    "description": "Exact metro-market filter, max 128 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "market",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Superhost",
+    "name": "superhost",
+    "description": "Count only Superhost listings",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "superhost",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Min Rating",
+    "name": "min_rating",
+    "description": "Minimum listing rating, from 0 through 5",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "min_rating",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Min Review Count",
+    "name": "min_review_count",
+    "description": "Minimum listing review count, 0 or greater",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "min_review_count",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Active Since",
+    "name": "active_since",
+    "description": "Freshness filter, an ISO-8601 date (YYYY-MM-DD)",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "active_since",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Min Listings",
+    "name": "min_listings",
+    "description": "Minimum listings per bucket; raises the small-cell suppression floor",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "min_listings",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /datasets/airbnb-markets/items/{country}",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Item"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Country",
+    "name": "country",
+    "required": true,
+    "description": "ISO-3166-1 alpha-2 country code, e.g. FR",
+    "default": "",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Item"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /datasets/airbnb-markets/nearby",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Nearby"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Lat",
+    "name": "lat",
+    "required": true,
+    "description": "Center latitude, from -90 through 90",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "lat",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Nearby"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Lon",
+    "name": "lon",
+    "required": true,
+    "description": "Center longitude, from -180 through 180",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "lon",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Nearby"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Radius M",
+    "name": "radius_m",
+    "required": true,
+    "description": "Search radius in meters, from 1 through 50000",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "radius_m",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Nearby"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Precision",
+    "name": "precision",
+    "description": "Geohash precision, from 1 through 12; defaults to a value derived from the radius",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "precision",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Nearby"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Min Listings",
+    "name": "min_listings",
+    "description": "Minimum listings per cell; raises the small-cell suppression floor",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "min_listings",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Nearby"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Country",
+    "name": "country",
+    "description": "Exact ISO-3166-1 alpha-2 country filter, e.g. US",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "country",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Nearby"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Superhost",
+    "name": "superhost",
+    "description": "Count only Superhost listings",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "superhost",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Nearby"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Min Rating",
+    "name": "min_rating",
+    "description": "Minimum listing rating, from 0 through 5",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "min_rating",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Nearby"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Active Since",
+    "name": "active_since",
+    "description": "Freshness filter, an ISO-8601 date (YYYY-MM-DD)",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "active_since",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Nearby"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /datasets/airbnb-markets/search",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Group By",
+    "name": "group_by",
+    "description": "Aggregate cell dimension enum: country, market. Defaults to country",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "group_by",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Country",
+    "name": "country",
+    "description": "Exact ISO-3166-1 alpha-2 country filter, e.g. FR",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "country",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Market",
+    "name": "market",
+    "description": "Exact metro-market filter, e.g. Paris, max 128 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "market",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Superhost",
+    "name": "superhost",
+    "description": "Count only Superhost listings",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "superhost",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Min Rating",
+    "name": "min_rating",
+    "description": "Minimum listing rating, from 0 through 5",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "min_rating",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Min Review Count",
+    "name": "min_review_count",
+    "description": "Minimum listing review count, 0 or greater",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "min_review_count",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Active Since",
+    "name": "active_since",
+    "description": "Freshness filter, an ISO-8601 date (YYYY-MM-DD); only listings last seen on or after it are counted",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "active_since",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Min Listings",
+    "name": "min_listings",
+    "description": "Minimum listings per cell; raises the small-cell suppression floor (never lowered below the built-in minimum)",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "min_listings",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Sort",
+    "name": "sort",
+    "description": "Sort enum: listings_desc, superhost_pct_desc, rating_desc, key_asc",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "sort",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Page",
+    "name": "page",
+    "description": "Page number, defaults to 1",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "page",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Page Size",
+    "name": "page_size",
+    "description": "Page size, defaults to 20 and maxes at 100; page * page_size must be <= 10000",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "page_size",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Airbnb Markets Search"
         ]
       }
     }
@@ -6364,31 +6785,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Datasets"
-        ],
-        "operation": [
-          "Datasets Apps Charts Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /datasets/apps-reviews/search",
     "name": "operation",
     "type": "notice",
@@ -6594,31 +6990,6 @@
         "property": "page_size",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Datasets"
-        ],
-        "operation": [
-          "Datasets Apps Reviews Search"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -6927,31 +7298,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Datasets"
-        ],
-        "operation": [
-          "Datasets Apps Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /datasets/creators/search",
     "name": "operation",
     "type": "notice",
@@ -7232,31 +7578,6 @@
         "property": "page_size",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Datasets"
-        ],
-        "operation": [
-          "Datasets Creators Search"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -7991,31 +8312,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Datasets"
-        ],
-        "operation": [
-          "Datasets Github Users Facets"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /datasets/github-users/items/{login}",
     "name": "operation",
     "type": "notice",
@@ -8041,31 +8337,6 @@
     "description": "GitHub login, max 128 characters",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Datasets"
-        ],
-        "operation": [
-          "Datasets Github Users Item"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -8286,31 +8557,6 @@
         "property": "page_size",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Datasets"
-        ],
-        "operation": [
-          "Datasets Github Users Nearby"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -9069,31 +9315,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Datasets"
-        ],
-        "operation": [
-          "Datasets Github Users Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /datasets/google-map-businesses/facets",
     "name": "operation",
     "type": "notice",
@@ -9316,7 +9537,7 @@
   {
     "displayName": "Min Rating",
     "name": "min_rating",
-    "description": "Minimum rating, 0 through 5. Businesses with no aggregate Google rating are stored as rating 0, so any min_rating above 0 excludes them.",
+    "description": "Minimum rating, 0 through 5. Businesses with no aggregate Google rating are returned with rating null, so any min_rating above 0 excludes them.",
     "default": 0,
     "type": "number",
     "routing": {
@@ -9398,6 +9619,31 @@
       "send": {
         "type": "query",
         "property": "has_phone",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Google Map Businesses Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Has Geo",
+    "name": "has_geo",
+    "description": "Filter by location presence: true keeps only mappable businesses with coordinates; false isolates locationless service-area businesses that have no map location",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "has_geo",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
       }
@@ -9514,31 +9760,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Datasets"
-        ],
-        "operation": [
-          "Datasets Google Map Businesses Facets"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /datasets/google-map-businesses/items/{place_id}",
     "name": "operation",
     "type": "notice",
@@ -9564,31 +9785,6 @@
     "description": "Google Place ID, max 256 characters",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Datasets"
-        ],
-        "operation": [
-          "Datasets Google Map Businesses Item"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -9725,7 +9921,7 @@
   {
     "displayName": "Min Rating",
     "name": "min_rating",
-    "description": "Minimum rating, 0 through 5. Businesses with no aggregate Google rating are stored as rating 0, so any min_rating above 0 excludes them.",
+    "description": "Minimum rating, 0 through 5. Businesses with no aggregate Google rating are returned with rating null, so any min_rating above 0 excludes them.",
     "default": 0,
     "type": "number",
     "routing": {
@@ -9809,31 +10005,6 @@
         "property": "page_size",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Datasets"
-        ],
-        "operation": [
-          "Datasets Google Map Businesses Nearby"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -10044,7 +10215,7 @@
   {
     "displayName": "Min Rating",
     "name": "min_rating",
-    "description": "Minimum rating, 0 through 5. Businesses with no aggregate Google rating are stored as rating 0, so any min_rating above 0 excludes them.",
+    "description": "Minimum rating, 0 through 5. Businesses with no aggregate Google rating are returned with rating null, so any min_rating above 0 excludes them.",
     "default": 0,
     "type": "number",
     "routing": {
@@ -10126,6 +10297,31 @@
       "send": {
         "type": "query",
         "property": "has_phone",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Google Map Businesses Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Has Geo",
+    "name": "has_geo",
+    "description": "Filter by location presence: true keeps only mappable businesses with coordinates; false isolates locationless service-area businesses that have no map location",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "has_geo",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
       }
@@ -10292,31 +10488,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Datasets"
-        ],
-        "operation": [
-          "Datasets Google Map Businesses Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "POST /diagnostics/antibot-check",
     "name": "operation",
     "type": "notice",
@@ -10324,31 +10495,6 @@
       "theme": "info"
     },
     "default": "",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Web"
-        ],
-        "operation": [
-          "Antibot Check"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -10449,31 +10595,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "E Bay"
-        ],
-        "operation": [
-          "eBay Item"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "POST /ebay/search",
     "name": "operation",
     "type": "notice",
@@ -10481,31 +10602,6 @@
       "theme": "info"
     },
     "default": "",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "E Bay"
-        ],
-        "operation": [
-          "eBay Search"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -10688,31 +10784,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "E Bay"
-        ],
-        "operation": [
-          "eBay Seller"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /geocoding/lookup",
     "name": "operation",
     "type": "notice",
@@ -10844,31 +10915,6 @@
         "property": "namedetails",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Geocoding"
-        ],
-        "operation": [
-          "Geocoding Lookup"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -11065,31 +11111,6 @@
         "property": "namedetails",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Geocoding"
-        ],
-        "operation": [
-          "Geocoding Reverse"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -11448,31 +11469,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Geocoding"
-        ],
-        "operation": [
-          "Geocoding Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /github/org/{org}",
     "name": "operation",
     "type": "notice",
@@ -11498,31 +11494,6 @@
     "description": "GitHub organization login",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Git Hub"
-        ],
-        "operation": [
-          "Github Org"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -11747,31 +11718,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Git Hub"
-        ],
-        "operation": [
-          "Github Org Repos"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /github/repo/{owner}/{repo}",
     "name": "operation",
     "type": "notice",
@@ -11815,31 +11761,6 @@
     "description": "Repository name",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Git Hub"
-        ],
-        "operation": [
-          "Github Repo"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -11943,31 +11864,6 @@
         "property": "per_page",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Git Hub"
-        ],
-        "operation": [
-          "Github Repo Contributors"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -12130,31 +12026,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Git Hub"
-        ],
-        "operation": [
-          "Github Repo Forks"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /github/repo/{owner}/{repo}/languages",
     "name": "operation",
     "type": "notice",
@@ -12198,31 +12069,6 @@
     "description": "Repository name",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Git Hub"
-        ],
-        "operation": [
-          "Github Repo Languages"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -12340,31 +12186,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Git Hub"
-        ],
-        "operation": [
-          "Github Repo Releases"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /github/repo/{owner}/{repo}/stargazers",
     "name": "operation",
     "type": "notice",
@@ -12456,31 +12277,6 @@
         "property": "per_page",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Git Hub"
-        ],
-        "operation": [
-          "Github Repo Stargazers"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -12668,31 +12464,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Git Hub"
-        ],
-        "operation": [
-          "Github Search Repositories"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /github/search/users",
     "name": "operation",
     "type": "notice",
@@ -12862,31 +12633,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Git Hub"
-        ],
-        "operation": [
-          "Github Search Users"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /github/trending",
     "name": "operation",
     "type": "notice",
@@ -12956,31 +12702,6 @@
         "property": "since",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Git Hub"
-        ],
-        "operation": [
-          "Github Trending"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -13078,31 +12799,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Git Hub"
-        ],
-        "operation": [
-          "Github Trending Developers"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /github/user/{username}",
     "name": "operation",
     "type": "notice",
@@ -13128,31 +12824,6 @@
     "description": "GitHub username",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Git Hub"
-        ],
-        "operation": [
-          "Github User"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -13252,31 +12923,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Git Hub"
-        ],
-        "operation": [
-          "Github User Events"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /github/user/{username}/pinned",
     "name": "operation",
     "type": "notice",
@@ -13302,31 +12948,6 @@
     "description": "GitHub username",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Git Hub"
-        ],
-        "operation": [
-          "Github User Pinned"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -13543,31 +13164,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Git Hub"
-        ],
-        "operation": [
-          "Github User Repos"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /google/finance/news/{quote}",
     "name": "operation",
     "type": "notice",
@@ -13630,31 +13226,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google Finance News"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /google/finance/quote/{quote}",
     "name": "operation",
     "type": "notice",
@@ -13680,31 +13251,6 @@
     "description": "Stock symbol to fetch the latest quote for (e.g., AAPL:NASDAQ, BTC-USD)",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google Finance Quote"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -13762,31 +13308,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google Finance Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "POST /google/jobs",
     "name": "operation",
     "type": "notice",
@@ -13794,31 +13315,6 @@
       "theme": "info"
     },
     "default": "",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google Jobs"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -13941,31 +13437,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google Map Place"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "POST /google/map/search",
     "name": "operation",
     "type": "notice",
@@ -13973,31 +13444,6 @@
       "theme": "info"
     },
     "default": "",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google Map Search"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -14227,31 +13673,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google News"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "POST /google/search",
     "name": "operation",
     "type": "notice",
@@ -14259,31 +13680,6 @@
       "theme": "info"
     },
     "default": "",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google Search"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -14542,31 +13938,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google Suggest"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "POST /google/trends/explore",
     "name": "operation",
     "type": "notice",
@@ -14574,31 +13945,6 @@
       "theme": "info"
     },
     "default": "",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google Trends Explore"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -16014,31 +15360,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google Videos"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /googleplay/app",
     "name": "operation",
     "type": "notice",
@@ -16120,31 +15441,6 @@
         "property": "lang",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google Play"
-        ],
-        "operation": [
-          "Google Play App"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -16354,31 +15650,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google Play"
-        ],
-        "operation": [
-          "Google Play Reviews"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /googleplay/search",
     "name": "operation",
     "type": "notice",
@@ -16549,31 +15820,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google Play"
-        ],
-        "operation": [
-          "Google Play Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /imdb/name",
     "name": "operation",
     "type": "notice",
@@ -16629,31 +15875,6 @@
         "property": "url",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "IM Db"
-        ],
-        "operation": [
-          "IMDb Name"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -16738,31 +15959,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "IM Db"
-        ],
-        "operation": [
-          "IMDb Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /imdb/title",
     "name": "operation",
     "type": "notice",
@@ -16818,31 +16014,6 @@
         "property": "url",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "IM Db"
-        ],
-        "operation": [
-          "IMDb Title"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -16951,31 +16122,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "IM Db"
-        ],
-        "operation": [
-          "IMDb Title Reviews"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /instagram/post/{id}/{post_id}",
     "name": "operation",
     "type": "notice",
@@ -17031,31 +16177,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Instagram"
-        ],
-        "operation": [
-          "Instagram Post"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /instagram/profile/{username}",
     "name": "operation",
     "type": "notice",
@@ -17081,31 +16202,6 @@
     "description": "Instagram username",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Instagram"
-        ],
-        "operation": [
-          "Instagram Profile"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -17180,31 +16276,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Instagram"
-        ],
-        "operation": [
-          "Instagram Reels"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /linkedin/company/{id}",
     "name": "operation",
     "type": "notice",
@@ -17230,31 +16301,6 @@
     "description": "LinkedIn Company ID",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Linked In"
-        ],
-        "operation": [
-          "LinkedIn Company"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -17304,31 +16350,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Linked In"
-        ],
-        "operation": [
-          "LinkedIn Product"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /linkedin/showcase/{id}",
     "name": "operation",
     "type": "notice",
@@ -17354,31 +16375,6 @@
     "description": "LinkedIn Showcase Page ID",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Linked In"
-        ],
-        "operation": [
-          "LinkedIn Showcase"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -17554,31 +16550,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Reddit"
-        ],
-        "operation": [
-          "Reddit Comments"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /reddit/post/{id}",
     "name": "operation",
     "type": "notice",
@@ -17627,31 +16598,6 @@
         "property": "with_scores",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Reddit"
-        ],
-        "operation": [
-          "Reddit Post"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -17909,31 +16855,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Reddit"
-        ],
-        "operation": [
-          "Reddit Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /reddit/subreddit/{subreddit}/posts",
     "name": "operation",
     "type": "notice",
@@ -18140,31 +17061,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Reddit"
-        ],
-        "operation": [
-          "Reddit Subreddit Posts"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /reddit/user/{username}/posts",
     "name": "operation",
     "type": "notice",
@@ -18277,31 +17173,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Reddit"
-        ],
-        "operation": [
-          "Reddit User Posts"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /rottentomatoes/movie",
     "name": "operation",
     "type": "notice",
@@ -18357,31 +17228,6 @@
         "property": "url",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Rotten Tomatoes"
-        ],
-        "operation": [
-          "Rotten Tomatoes Movie"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -18558,31 +17404,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Rotten Tomatoes"
-        ],
-        "operation": [
-          "Rotten Tomatoes Movie Reviews"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /rottentomatoes/search",
     "name": "operation",
     "type": "notice",
@@ -18639,31 +17460,6 @@
         "property": "limit",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Rotten Tomatoes"
-        ],
-        "operation": [
-          "Rotten Tomatoes Search"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -18747,31 +17543,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Rotten Tomatoes"
-        ],
-        "operation": [
-          "Rotten Tomatoes Series"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /shop-app/products/{id}",
     "name": "operation",
     "type": "notice",
@@ -18834,31 +17605,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Shop App"
-        ],
-        "operation": [
-          "Shop App Product"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /shop-app/products/{id}/reviews",
     "name": "operation",
     "type": "notice",
@@ -18907,31 +17653,6 @@
         "property": "limit",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Shop App"
-        ],
-        "operation": [
-          "Shop App Product Reviews"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -19091,31 +17812,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Shop App"
-        ],
-        "operation": [
-          "Shop App Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /shop-app/shops/{handle}",
     "name": "operation",
     "type": "notice",
@@ -19141,31 +17837,6 @@
     "description": "Shop handle",
     "default": "marcnolan",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Shop App"
-        ],
-        "operation": [
-          "Shop App Shop"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -19259,31 +17930,6 @@
         "property": "limit",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Shopify"
-        ],
-        "operation": [
-          "Shopify Collections"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -19393,31 +18039,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Shopify"
-        ],
-        "operation": [
-          "Shopify Products"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /shopify/products/{handle}",
     "name": "operation",
     "type": "notice",
@@ -19481,31 +18102,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Shopify"
-        ],
-        "operation": [
-          "Shopify Product"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /shopify/store",
     "name": "operation",
     "type": "notice",
@@ -19537,31 +18133,6 @@
         "property": "url",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Shopify"
-        ],
-        "operation": [
-          "Shopify Store"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -19695,31 +18266,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Spotify"
-        ],
-        "operation": [
-          "Spotify Album"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /spotify/artist",
     "name": "operation",
     "type": "notice",
@@ -19775,31 +18321,6 @@
         "property": "id",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Spotify"
-        ],
-        "operation": [
-          "Spotify Artist"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -19969,31 +18490,6 @@
         "property": "include_episode_content_ratings_v2",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Spotify"
-        ],
-        "operation": [
-          "Spotify Playlist"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -20303,31 +18799,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Spotify"
-        ],
-        "operation": [
-          "Spotify Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /spotify/track",
     "name": "operation",
     "type": "notice",
@@ -20397,31 +18868,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Spotify"
-        ],
-        "operation": [
-          "Spotify Track"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /tiktok/comments",
     "name": "operation",
     "type": "notice",
@@ -20429,31 +18875,6 @@
       "theme": "info"
     },
     "default": "",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Tik Tok"
-        ],
-        "operation": [
-          "TikTok Video Comments"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -20536,31 +18957,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Tik Tok"
-        ],
-        "operation": [
-          "TikTok Post"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "Id",
     "name": "id",
     "required": true,
@@ -20598,31 +18994,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Tik Tok"
-        ],
-        "operation": [
-          "TikTok Profile"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "Handler",
     "name": "handler",
     "required": true,
@@ -20648,31 +19019,6 @@
       "theme": "info"
     },
     "default": "",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Tik Tok"
-        ],
-        "operation": [
-          "TikTok Search"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -20881,31 +19227,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Trustpilot"
-        ],
-        "operation": [
-          "Trustpilot Business Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /trustpilot/business/{slug}",
     "name": "operation",
     "type": "notice",
@@ -20931,31 +19252,6 @@
     "description": "Trustpilot business slug",
     "default": "openai.com",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Trustpilot"
-        ],
-        "operation": [
-          "Trustpilot Business"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -21205,31 +19501,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Trustpilot"
-        ],
-        "operation": [
-          "Trustpilot Business Reviews"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "POST /web/scrape",
     "name": "operation",
     "type": "notice",
@@ -21237,31 +19508,6 @@
       "theme": "info"
     },
     "default": "",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Web"
-        ],
-        "operation": [
-          "Web Scrape"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -21571,31 +19817,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "X"
-        ],
-        "operation": [
-          "X Post"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /x/profile/{username}",
     "name": "operation",
     "type": "notice",
@@ -21621,31 +19842,6 @@
     "description": "X username",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "X"
-        ],
-        "operation": [
-          "X Profile"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -21706,31 +19902,6 @@
         "property": "limit",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "X"
-        ],
-        "operation": [
-          "X Profile Posts"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -21915,31 +20086,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Yahoo Finance"
-        ],
-        "operation": [
-          "Yahoo Finance Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /yahoo-finance/ticker/{symbol}/financials",
     "name": "operation",
     "type": "notice",
@@ -22013,31 +20159,6 @@
         "property": "period",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Yahoo Finance"
-        ],
-        "operation": [
-          "Yahoo Finance Ticker Financials"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -22339,31 +20460,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Yahoo Finance"
-        ],
-        "operation": [
-          "Yahoo Finance Ticker History"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /yahoo-finance/ticker/{symbol}/info",
     "name": "operation",
     "type": "notice",
@@ -22389,31 +20485,6 @@
     "description": "Yahoo Finance symbol such as AAPL",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Yahoo Finance"
-        ],
-        "operation": [
-          "Yahoo Finance Ticker Info"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -22513,31 +20584,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Yahoo Finance"
-        ],
-        "operation": [
-          "Yahoo Finance Ticker News"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /yahoo-finance/ticker/{symbol}/quote",
     "name": "operation",
     "type": "notice",
@@ -22563,31 +20609,6 @@
     "description": "Yahoo Finance symbol such as AAPL",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Yahoo Finance"
-        ],
-        "operation": [
-          "Yahoo Finance Ticker Quote"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -22662,31 +20683,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "You Tube"
-        ],
-        "operation": [
-          "YouTube Channel Videos"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /youtube/comments/{id}",
     "name": "operation",
     "type": "notice",
@@ -22735,31 +20731,6 @@
         "property": "continuation_token",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "You Tube"
-        ],
-        "operation": [
-          "YouTube Comments"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
@@ -23090,31 +21061,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "You Tube"
-        ],
-        "operation": [
-          "YouTube Search"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /youtube/transcript/{id}",
     "name": "operation",
     "type": "notice",
@@ -23270,31 +21216,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "You Tube"
-        ],
-        "operation": [
-          "YouTube Transcript"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /youtube/video/{id}",
     "name": "operation",
     "type": "notice",
@@ -23320,31 +21241,6 @@
     "description": "YouTube video ID (11-char code)",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "You Tube"
-        ],
-        "operation": [
-          "YouTube Video"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -23452,31 +21348,6 @@
     }
   },
   {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Zillow"
-        ],
-        "operation": [
-          "Zillow Autocomplete"
-        ]
-      }
-    }
-  },
-  {
     "displayName": "GET /zillow/property/{zpid}",
     "name": "operation",
     "type": "notice",
@@ -23502,31 +21373,6 @@
     "description": "Zillow property id",
     "default": "",
     "type": "string",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Zillow"
-        ],
-        "operation": [
-          "Zillow Property"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
-      }
-    },
     "displayOptions": {
       "show": {
         "resource": [
@@ -23770,31 +21616,6 @@
         "property": "north",
         "value": "={{ $value }}",
         "propertyInDotNotation": false
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Zillow"
-        ],
-        "operation": [
-          "Zillow Search"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "X Api Key",
-    "name": "x-api-key",
-    "required": true,
-    "description": "API key required",
-    "default": "",
-    "type": "string",
-    "routing": {
-      "request": {
-        "headers": {
-          "x-api-key": "={{ $value }}"
-        }
       }
     },
     "displayOptions": {
