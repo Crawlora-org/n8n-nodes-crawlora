@@ -11,7 +11,7 @@ it):
 - **Search** — Google, Bing, Brave (web, news, images, videos, suggest) plus Google Maps, Jobs, Trends
 - **Finance** — Yahoo Finance and Google Finance (quotes, financials, news, history)
 - **E‑commerce** — Amazon, eBay, Shopify, Shop.app
-- **Social** — YouTube, Reddit, TikTok, Instagram, LinkedIn
+- **Social** — YouTube, Reddit, TikTok, Instagram, Threads, LinkedIn, X
 - **App stores** — Apple App Store, Google Play
 - **Reviews & entertainment** — Trustpilot, IMDb, Rotten Tomatoes, Spotify
 - **Real estate & places** — Zillow, Maps business datasets, geocoding

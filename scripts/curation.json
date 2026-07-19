@@ -44,6 +44,7 @@
   "Instagram": "*",
   "LinkedIn": "*",
   "GitHub": "*",
+  "Threads": "*",
   "X": "*",
 
   "Trustpilot": ["trustpilot-business-search", "trustpilot-business", "trustpilot-business-reviews"],

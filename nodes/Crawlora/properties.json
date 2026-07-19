@@ -101,6 +101,11 @@
         "description": ""
       },
       {
+        "name": "Threads",
+        "value": "Threads",
+        "description": ""
+      },
+      {
         "name": "TikTok",
         "value": "Tik Tok",
         "description": ""
@@ -202,7 +207,7 @@
         "name": "App Store App",
         "value": "App Store App",
         "action": "Retrieve full App Store app details",
-        "description": "Returns normalized app metadata from the App Store lookup API. Provide either `id` or `app_id`.",
+        "description": "Returns normalized app metadata from the App Store lookup API. Provide either `id` (numeric track ID) or `app_id` (bundle ID).",
         "routing": {
           "request": {
             "method": "GET",
@@ -214,7 +219,7 @@
         "name": "App Store Reviews",
         "value": "App Store Reviews",
         "action": "Retrieve App Store reviews",
-        "description": "Returns one page of customer reviews for an app. Provide either `id` or `app_id`.",
+        "description": "Returns one page of customer reviews for an app. Provide either `id` (numeric track ID) or `app_id` (bundle ID).",
         "routing": {
           "request": {
             "method": "GET",
@@ -803,6 +808,78 @@
         }
       },
       {
+        "name": "Datasets Jobs Companies",
+        "value": "Datasets Jobs Companies",
+        "action": "Find which companies are hiring",
+        "description": "Searches the discovered company board registry — which companies are hiring, on which ATS, with how many open roles. provider enum: `greenhouse`, `lever`, `ashby`, `workday`, `smartrecruiters`, `workable`, `recruitee`, `rippling`, `personio`, `teamtailor`, `oracle`, `ukg`, `icims`, `eightfold`. status enum: `active`, `empty`, `gone`, `blocked`, `pending`. sort enum: `open_desc`, `company_asc`, `crawled_desc`.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/datasets/jobs/companies"
+          }
+        }
+      },
+      {
+        "name": "Datasets Jobs Company Item",
+        "value": "Datasets Jobs Company Item",
+        "action": "Get a single company by board id",
+        "description": "Returns one discovered company board by its dataset board id. When the board carries a known domain (currently populated for iCIMS and Eightfold boards; most Common-Crawl-discovered boards do not), the response also includes a `tech_stack` field joined from the website tech-stack dataset -- a firmographic hint, not a guess: it is only attached when a structural domain signal exists. Returns 404 when the board id is not in the registry.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/datasets/jobs/companies/{{$parameter[\"id\"]}}"
+          }
+        }
+      },
+      {
+        "name": "Datasets Jobs Facets",
+        "value": "Datasets Jobs Facets",
+        "action": "Facet the jobs dataset (hiring market aggregates)",
+        "description": "Aggregations over all open postings: top companies hiring, breakdown by ATS provider, department, location, employment type, and the remote share — a live hiring-market snapshot.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/datasets/jobs/facets"
+          }
+        }
+      },
+      {
+        "name": "Datasets Jobs Item",
+        "value": "Datasets Jobs Item",
+        "action": "Get a single posting from the jobs dataset",
+        "description": "Returns one crawled job posting by its dataset posting id. Returns 404 when absent.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/datasets/jobs/items/{{$parameter[\"id\"]}}"
+          }
+        }
+      },
+      {
+        "name": "Datasets Jobs Nearby",
+        "value": "Datasets Jobs Nearby",
+        "action": "Find postings near a coordinate",
+        "description": "Finds crawled job postings within `radius_km` of a `lat`/`lon`, nearest first. Only geocoded postings participate (the geo-enrich worker back-fills coordinates from each posting's location). Open roles only by default. provider enum: `greenhouse`, `lever`, `ashby`, `workday`, `smartrecruiters`, `workable`, `recruitee`, `rippling`, `personio`, `teamtailor`, `oracle`, `ukg`, `icims`, `eightfold`.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/datasets/jobs/nearby"
+          }
+        }
+      },
+      {
+        "name": "Datasets Jobs Search",
+        "value": "Datasets Jobs Search",
+        "action": "Search the jobs dataset (all companies' live postings)",
+        "description": "Full-text + faceted search over every job posting crawled from every discovered company ATS board (Greenhouse, Lever, Ashby, Workday, SmartRecruiters, Workable, Recruitee, Rippling, Personio, Teamtailor, Oracle, UKG, iCIMS, Eightfold). Open roles only by default (set include_closed=true for historical/filled roles). provider enum: `greenhouse`, `lever`, `ashby`, `workday`, `smartrecruiters`, `workable`, `recruitee`, `rippling`, `personio`, `teamtailor`, `oracle`, `ukg`, `icims`, `eightfold`. sort enum: `relevance`, `posted_desc`, `company_asc`.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/datasets/jobs/search"
+          }
+        }
+      },
+      {
         "name": "Datasets Journalists Facets",
         "value": "Datasets Journalists Facets",
         "action": "Facet the journalists dataset",
@@ -830,7 +907,7 @@
         "name": "Datasets Journalists Search",
         "value": "Datasets Journalists Search",
         "action": "Search the journalists dataset",
-        "description": "Searches the journalists index (dataset id enum value `journalists`) — public journalist and reporter contact records crawled from news outlets' own staff/author pages, for PR outreach. Each record carries the outlet, title, best-effort beat topics, and any public contact info (a work email or a social handle) found on that outlet's own page. There is no cross-outlet upstream search; this dataset is built by crawling a curated roster of outlets ourselves. vertical enum: `tech`, `crypto`, `marketing`, `consumer_tech`, `consumer_policy`, `cybersecurity`, `health`, `gaming`, `climate`, `tech_independent`, `culture_independent`. contact_type enum: `email`, `social`, `none`. sort enum: `relevance`, `name_asc`, `outlet_asc`, `crawled_desc`.",
+        "description": "Searches the journalists index (dataset id enum value `journalists`) — public journalist and reporter contact records crawled from news outlets' own staff/author pages, for PR outreach. Each record carries the outlet, title, best-effort beat topics, and any public contact info (a work email or a social handle) found on that outlet's own page. There is no cross-outlet upstream search; this dataset is built by crawling a curated roster of outlets ourselves. vertical enum: `tech`, `crypto`, `marketing`, `consumer_tech`, `consumer_policy`, `cybersecurity`, `health`, `gaming`, `climate`, `business`, `entertainment`, `sports`, `legal`, `science`, `politics`, `real_estate`, `automotive`, `travel`, `food`, `education`, `design`, `film_tv`, `fashion`, `music`, `personal_finance`, `tech_independent`, `culture_independent`, `local_news`, `construction`, `banking`, `retail`, `aerospace_defense`, `energy`, `agriculture`, `local_business`. contact_type enum: `email`, `social`, `none`. sort enum: `relevance`, `name_asc`, `outlet_asc`, `crawled_desc`.",
         "routing": {
           "request": {
             "method": "GET",
@@ -1031,6 +1108,90 @@
         }
       },
       {
+        "name": "Datasets Sec Companies Facets",
+        "value": "Datasets Sec Companies Facets",
+        "action": "Facet the SEC companies dataset",
+        "description": "Returns terms-aggregation counts for one facet of the SEC companies dataset, scoped to the same filters as search. Facet enum: `sic`, `sic_description`, `exchange`, `state_of_incorporation`, `entity_type`, `reporting_currency`, `revenue_band`, `forms_filed`. `revenue_band` buckets latest-annual revenue into: `unknown`, `under_1m`, `1m_10m`, `10m_100m`, `100m_1b`, `1b_10b`, `over_10b`.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/datasets/sec-companies/facets"
+          }
+        }
+      },
+      {
+        "name": "Datasets Sec Companies Financials",
+        "value": "Datasets Sec Companies Financials",
+        "action": "Get a SEC company's financial-statement history",
+        "description": "Returns a company's normalized financial-statement history (income statement, balance sheet, cash flow) from the SEC companies dataset, newest fiscal year first. An unknown CIK or a company with no XBRL data returns an empty series rather than a 404 — most filers without a current ticker have no financial-statement history at all. `lines` keys are the same normalized concept names the live `/sec/financials` endpoint uses (e.g. `revenue`, `net_income`, `total_assets`); `ratios` keys include `gross_margin`, `operating_margin`, `net_margin`, `revenue_growth_yoy`, `current_ratio`, `debt_to_equity`, `free_cash_flow` where derivable. statement enum: `income`, `balance`, `cash_flow`. period enum: `annual`, `quarterly`.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/datasets/sec-companies/financials/{{$parameter[\"cik\"]}}"
+          }
+        }
+      },
+      {
+        "name": "Datasets Sec Companies Insider",
+        "value": "Datasets Sec Companies Insider",
+        "action": "Get a SEC company's insider-transaction history",
+        "description": "Returns a company's insider (Form 3/4/5) transaction history from the SEC companies dataset, most recent transaction first. An unknown CIK or a company with no reported transactions returns an empty series rather than a 404.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/datasets/sec-companies/insider/{{$parameter[\"cik\"]}}"
+          }
+        }
+      },
+      {
+        "name": "Datasets Sec Companies Item",
+        "value": "Datasets Sec Companies Item",
+        "action": "Get a company from the SEC companies dataset",
+        "description": "Returns one SEC-reporting company by CIK from dataset id `sec-companies`, including its filing-history summary, financial-statement rollups, and trailing-90-day insider-activity summary. Returns 404 when the CIK is not in the dataset.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/datasets/sec-companies/items/{{$parameter[\"cik\"]}}"
+          }
+        }
+      },
+      {
+        "name": "Datasets Sec Companies Search",
+        "value": "Datasets Sec Companies Search",
+        "action": "Search the SEC companies dataset",
+        "description": "Searches SEC-reporting companies stored in a search index — normalized filing history, financial-statement rollups (latest annual/quarterly revenue, net income, total assets) and trailing-90-day insider (Form 3/4/5) activity. Sort enum: `relevance`, `name_asc`, `revenue_desc`, `net_income_desc`, `filing_recent_desc`, `insider_activity_desc`. `entity_type`, `sic`, `sic_description`, `exchange`, and `state_of_incorporation` are open filters over the exact values EDGAR reports for each filer (not a fixed enum) — discover real values via the matching facet.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/datasets/sec-companies/search"
+          }
+        }
+      },
+      {
+        "name": "Datasets Sec Institutional Positions Facets",
+        "value": "Datasets Sec Institutional Positions Facets",
+        "action": "Facet the SEC institutional positions dataset",
+        "description": "Returns terms-aggregation counts for one facet of the SEC institutional positions dataset, scoped to the same filters as search. Facet enum: `manager`, `issuer`.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/datasets/sec-institutional-positions/facets"
+          }
+        }
+      },
+      {
+        "name": "Datasets Sec Institutional Positions Search",
+        "value": "Datasets Sec Institutional Positions Search",
+        "action": "Search the SEC institutional positions dataset",
+        "description": "Searches institutional investment managers' quarterly 13F portfolio holdings stored in a search index. Filter by manager_cik for a manager's full reported portfolio (an exact, reliable filter), or by issuer_name/cusip for a best-effort view of which managers reported a position in an issuer — SEC publishes no authoritative CUSIP-to-CIK mapping, so the issuer side is never a guaranteed-resolved join. Sort enum: `value_desc`, `value_asc`, `shares_desc`.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/datasets/sec-institutional-positions/search"
+          }
+        }
+      },
+      {
         "name": "Datasets Steam Achievements Search",
         "value": "Datasets Steam Achievements Search",
         "action": "Search steam-achievements dataset",
@@ -1219,6 +1380,42 @@
           "request": {
             "method": "GET",
             "url": "=/datasets/trustmrr/search"
+          }
+        }
+      },
+      {
+        "name": "Datasets X Users Facets",
+        "value": "Datasets X Users Facets",
+        "action": "Facet the X users dataset",
+        "description": "Returns terms aggregation counts for the X users dataset. Facet enum: `is_blue_verified`, `has_bio`, `has_external_url`, `source_tier`.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/datasets/x-users/facets"
+          }
+        }
+      },
+      {
+        "name": "Datasets X Users Item",
+        "value": "Datasets X Users Item",
+        "action": "Get an X user from the dataset",
+        "description": "Returns one X user record by username from dataset id enum value `x-users`.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/datasets/x-users/items/{{$parameter[\"username\"]}}"
+          }
+        }
+      },
+      {
+        "name": "Datasets X Users Search",
+        "value": "Datasets X Users Search",
+        "action": "Search the X users dataset",
+        "description": "Searches public X (Twitter) user profiles stored in a search index. Sort enum: `relevance`, `followers_desc`, `followers_asc`, `crawled_at_desc`, `crawled_at_asc`, `created_at_desc`, `created_at_asc`.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/datasets/x-users/search"
           }
         }
       }
@@ -1495,6 +1692,30 @@
           "request": {
             "method": "GET",
             "url": "=/github/user/{{$parameter[\"username\"]}}/events"
+          }
+        }
+      },
+      {
+        "name": "Github User Followers",
+        "value": "Github User Followers",
+        "action": "List a GitHub user's followers",
+        "description": "Returns a page of the public accounts following a GitHub user.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/github/user/{{$parameter[\"username\"]}}/followers"
+          }
+        }
+      },
+      {
+        "name": "Github User Following",
+        "value": "Github User Following",
+        "action": "List who a GitHub user follows",
+        "description": "Returns a page of the public accounts a GitHub user follows.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/github/user/{{$parameter[\"username\"]}}/following"
           }
         }
       },
@@ -2245,6 +2466,82 @@
     "displayOptions": {
       "show": {
         "resource": [
+          "Threads"
+        ]
+      }
+    },
+    "options": [
+      {
+        "name": "Threads Post",
+        "value": "Threads Post",
+        "action": "Retrieve a public Threads post",
+        "description": "Returns the public text, author, canonical URL, and preview image for a Threads post.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/threads/post/{{$parameter[\"username\"]}}/{{$parameter[\"code\"]}}"
+          }
+        }
+      },
+      {
+        "name": "Threads Post Replies",
+        "value": "Threads Post Replies",
+        "action": "Retrieve public replies to a Threads post",
+        "description": "Returns the public replies currently exposed to logged-out visitors. The response identifies when Threads reports additional replies but withholds a usable continuation cursor.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/threads/post/{{$parameter[\"username\"]}}/{{$parameter[\"code\"]}}/replies"
+          }
+        }
+      },
+      {
+        "name": "Threads Profile",
+        "value": "Threads Profile",
+        "action": "Retrieve a public Threads profile",
+        "description": "Returns public profile metadata for a Threads username, including the visible biography and counts.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/threads/profile/{{$parameter[\"username\"]}}"
+          }
+        }
+      },
+      {
+        "name": "Threads Profile Posts",
+        "value": "Threads Profile Posts",
+        "action": "Retrieve public posts from a Threads profile",
+        "description": "Returns public profile posts with an opaque continuation cursor when more posts are available.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/threads/profile/{{$parameter[\"username\"]}}/posts"
+          }
+        }
+      },
+      {
+        "name": "Threads Search",
+        "value": "Threads Search",
+        "action": "Search public Threads posts",
+        "description": "Returns the public first page of Threads search results for a query. Logged-out search does not expose a continuation cursor.",
+        "routing": {
+          "request": {
+            "method": "GET",
+            "url": "=/threads/search"
+          }
+        }
+      }
+    ],
+    "default": ""
+  },
+  {
+    "displayName": "Operation",
+    "name": "operation",
+    "type": "options",
+    "noDataExpression": true,
+    "displayOptions": {
+      "show": {
+        "resource": [
           "Tik Tok"
         ]
       }
@@ -2949,7 +3246,7 @@
   {
     "displayName": "Id",
     "name": "id",
-    "description": "App Store track ID",
+    "description": "App Store numeric track ID (digits only)",
     "default": "553834731",
     "type": "string",
     "routing": {
@@ -3118,7 +3415,7 @@
   {
     "displayName": "Id",
     "name": "id",
-    "description": "App Store track ID",
+    "description": "App Store numeric track ID (digits only)",
     "default": "553834731",
     "type": "string",
     "routing": {
@@ -15079,6 +15376,1132 @@
     }
   },
   {
+    "displayName": "GET /datasets/jobs/companies",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Companies"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Q",
+    "name": "q",
+    "description": "Match on company name / domain",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "q",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Companies"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Provider",
+    "name": "provider",
+    "description": "ATS provider filter",
+    "default": "greenhouse",
+    "type": "options",
+    "options": [
+      {
+        "name": "Greenhouse",
+        "value": "greenhouse"
+      },
+      {
+        "name": "Lever",
+        "value": "lever"
+      },
+      {
+        "name": "Ashby",
+        "value": "ashby"
+      },
+      {
+        "name": "Workday",
+        "value": "workday"
+      },
+      {
+        "name": "Smartrecruiters",
+        "value": "smartrecruiters"
+      },
+      {
+        "name": "Workable",
+        "value": "workable"
+      },
+      {
+        "name": "Recruitee",
+        "value": "recruitee"
+      },
+      {
+        "name": "Rippling",
+        "value": "rippling"
+      },
+      {
+        "name": "Personio",
+        "value": "personio"
+      },
+      {
+        "name": "Teamtailor",
+        "value": "teamtailor"
+      },
+      {
+        "name": "Oracle",
+        "value": "oracle"
+      },
+      {
+        "name": "Ukg",
+        "value": "ukg"
+      },
+      {
+        "name": "Icims",
+        "value": "icims"
+      },
+      {
+        "name": "Eightfold",
+        "value": "eightfold"
+      }
+    ],
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "provider",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Companies"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Status",
+    "name": "status",
+    "description": "Board status. Enum: active, empty, gone, blocked, pending",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "status",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Companies"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Min Open Roles",
+    "name": "min_open_roles",
+    "description": "Minimum open roles",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "min_open_roles",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Companies"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Sort",
+    "name": "sort",
+    "description": "Sort enum: open_desc, company_asc, crawled_desc",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "sort",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Companies"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Page",
+    "name": "page",
+    "description": "Page number, default 1",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "page",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Companies"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Page Size",
+    "name": "page_size",
+    "description": "Page size, default 20, max 100",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "page_size",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Companies"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Companies"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /datasets/jobs/companies/{id}",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Company Item"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Id",
+    "name": "id",
+    "required": true,
+    "description": "Dataset board id",
+    "default": "",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Company Item"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Company Item"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /datasets/jobs/facets",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Size",
+    "name": "size",
+    "description": "Buckets per facet, default 20, max 100",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "size",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /datasets/jobs/items/{id}",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Item"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Id",
+    "name": "id",
+    "required": true,
+    "description": "Dataset posting id",
+    "default": "",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Item"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Item"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /datasets/jobs/nearby",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Nearby"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Lat",
+    "name": "lat",
+    "required": true,
+    "description": "Latitude, -90..90",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "lat",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Nearby"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Lon",
+    "name": "lon",
+    "required": true,
+    "description": "Longitude, -180..180",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "lon",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Nearby"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Radius Km",
+    "name": "radius_km",
+    "description": "Search radius in km, default 50, max 500",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "radius_km",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Nearby"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Provider",
+    "name": "provider",
+    "description": "ATS provider filter",
+    "default": "greenhouse",
+    "type": "options",
+    "options": [
+      {
+        "name": "Greenhouse",
+        "value": "greenhouse"
+      },
+      {
+        "name": "Lever",
+        "value": "lever"
+      },
+      {
+        "name": "Ashby",
+        "value": "ashby"
+      },
+      {
+        "name": "Workday",
+        "value": "workday"
+      },
+      {
+        "name": "Smartrecruiters",
+        "value": "smartrecruiters"
+      },
+      {
+        "name": "Workable",
+        "value": "workable"
+      },
+      {
+        "name": "Recruitee",
+        "value": "recruitee"
+      },
+      {
+        "name": "Rippling",
+        "value": "rippling"
+      },
+      {
+        "name": "Personio",
+        "value": "personio"
+      },
+      {
+        "name": "Teamtailor",
+        "value": "teamtailor"
+      },
+      {
+        "name": "Oracle",
+        "value": "oracle"
+      },
+      {
+        "name": "Ukg",
+        "value": "ukg"
+      },
+      {
+        "name": "Icims",
+        "value": "icims"
+      },
+      {
+        "name": "Eightfold",
+        "value": "eightfold"
+      }
+    ],
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "provider",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Nearby"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Include Closed",
+    "name": "include_closed",
+    "description": "Include closed/filled roles (default false)",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "include_closed",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Nearby"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Page",
+    "name": "page",
+    "description": "Page number, default 1",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "page",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Nearby"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Page Size",
+    "name": "page_size",
+    "description": "Page size, default 20, max 100",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "page_size",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Nearby"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Nearby"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /datasets/jobs/search",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Q",
+    "name": "q",
+    "description": "Full-text over title, company, description",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "q",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Company",
+    "name": "company",
+    "description": "Company name match",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "company",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Provider",
+    "name": "provider",
+    "description": "ATS provider filter",
+    "default": "greenhouse",
+    "type": "options",
+    "options": [
+      {
+        "name": "Greenhouse",
+        "value": "greenhouse"
+      },
+      {
+        "name": "Lever",
+        "value": "lever"
+      },
+      {
+        "name": "Ashby",
+        "value": "ashby"
+      },
+      {
+        "name": "Workday",
+        "value": "workday"
+      },
+      {
+        "name": "Smartrecruiters",
+        "value": "smartrecruiters"
+      },
+      {
+        "name": "Workable",
+        "value": "workable"
+      },
+      {
+        "name": "Recruitee",
+        "value": "recruitee"
+      },
+      {
+        "name": "Rippling",
+        "value": "rippling"
+      },
+      {
+        "name": "Personio",
+        "value": "personio"
+      },
+      {
+        "name": "Teamtailor",
+        "value": "teamtailor"
+      },
+      {
+        "name": "Oracle",
+        "value": "oracle"
+      },
+      {
+        "name": "Ukg",
+        "value": "ukg"
+      },
+      {
+        "name": "Icims",
+        "value": "icims"
+      },
+      {
+        "name": "Eightfold",
+        "value": "eightfold"
+      }
+    ],
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "provider",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Department",
+    "name": "department",
+    "description": "Exact department filter",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "department",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Location",
+    "name": "location",
+    "description": "Location match",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "location",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Employment Type",
+    "name": "employment_type",
+    "description": "Exact employment-type filter",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "employment_type",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Remote",
+    "name": "remote",
+    "description": "Filter by remote (true or false)",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "remote",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Include Closed",
+    "name": "include_closed",
+    "description": "Include closed/filled roles (default false = open only)",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "include_closed",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Sort",
+    "name": "sort",
+    "description": "Sort enum: relevance, posted_desc, company_asc",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "sort",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Page",
+    "name": "page",
+    "description": "Page number, default 1",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "page",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Page Size",
+    "name": "page_size",
+    "description": "Page size, default 20, max 100; page*page_size must be <= 10000",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "page_size",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Jobs Search"
+        ]
+      }
+    }
+  },
+  {
     "displayName": "GET /datasets/journalists/facets",
     "name": "operation",
     "type": "notice",
@@ -15176,7 +16599,7 @@
   {
     "displayName": "Vertical",
     "name": "vertical",
-    "description": "Exact beat-vertical filter. Enum: tech, crypto, marketing, consumer_tech, consumer_policy, cybersecurity, health, gaming, climate, tech_independent, culture_independent",
+    "description": "Exact beat-vertical filter. Enum: tech, crypto, marketing, consumer_tech, consumer_policy, cybersecurity, health, gaming, climate, business, entertainment, sports, legal, science, politics, real_estate, automotive, travel, food, education, design, film_tv, fashion, music, personal_finance, tech_independent, culture_independent, local_news, construction, banking, retail, aerospace_defense, energy, agriculture, local_business",
     "default": "",
     "type": "string",
     "routing": {
@@ -15425,7 +16848,7 @@
   {
     "displayName": "Vertical",
     "name": "vertical",
-    "description": "Exact beat-vertical filter. Enum: tech, crypto, marketing, consumer_tech, consumer_policy, cybersecurity, health, gaming, climate, tech_independent, culture_independent",
+    "description": "Exact beat-vertical filter. Enum: tech, crypto, marketing, consumer_tech, consumer_policy, cybersecurity, health, gaming, climate, business, entertainment, sports, legal, science, politics, real_estate, automotive, travel, food, education, design, film_tv, fashion, music, personal_finance, tech_independent, culture_independent, local_news, construction, banking, retail, aerospace_defense, energy, agriculture, local_business",
     "default": "",
     "type": "string",
     "routing": {
@@ -20017,6 +21440,1595 @@
         ],
         "operation": [
           "Datasets Producthunt Trends Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /datasets/sec-companies/facets",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Facet",
+    "name": "facet",
+    "required": true,
+    "description": "Facet enum: sic, sic_description, exchange, state_of_incorporation, entity_type, reporting_currency, revenue_band, forms_filed",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "facet",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Q",
+    "name": "q",
+    "description": "Full-text query over the company name, or an exact ticker match, max 256 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "q",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Ticker",
+    "name": "ticker",
+    "description": "Exact ticker filter (case-insensitive), max 32 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "ticker",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Sic",
+    "name": "sic",
+    "description": "Exact SIC industry-code filter, max 32 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "sic",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Exchange",
+    "name": "exchange",
+    "description": "Exact exchange filter as reported by EDGAR, max 64 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "exchange",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "State Of Incorporation",
+    "name": "state_of_incorporation",
+    "description": "Exact state/country-of-incorporation filter, max 32 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "state_of_incorporation",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Entity Type",
+    "name": "entity_type",
+    "description": "Exact entity-type filter, max 64 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "entity_type",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Reporting Currency",
+    "name": "reporting_currency",
+    "description": "Exact reporting-currency filter, ISO-4217 code, e.g. USD, JPY, EUR",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "reporting_currency",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Has Financials",
+    "name": "has_financials",
+    "description": "When true, keep only companies that have XBRL financial statements",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "has_financials",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Min Revenue",
+    "name": "min_revenue",
+    "description": "Minimum latest-annual revenue in USD (normalized at reference rates), 0 or greater",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "min_revenue",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Form Filed",
+    "name": "form_filed",
+    "description": "Exact form-type filter, e.g. 10-K, 8-K",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "form_filed",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /datasets/sec-companies/financials/{cik}",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Financials"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Cik",
+    "name": "cik",
+    "required": true,
+    "description": "SEC CIK, numeric or zero-padded",
+    "default": "",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Financials"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Statement",
+    "name": "statement",
+    "description": "Statement enum: income, balance, cash_flow. Omit to return all three.",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "statement",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Financials"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Period",
+    "name": "period",
+    "description": "Period-type enum: annual, quarterly. Omit to return both.",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "period",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Financials"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "From",
+    "name": "from",
+    "description": "Inclusive lower bound on fiscal_year",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "from",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Financials"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "To",
+    "name": "to",
+    "description": "Inclusive upper bound on fiscal_year",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "to",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Financials"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Limit",
+    "name": "limit",
+    "description": "Maximum points returned (most recent fiscal years first), default 100, max 400",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "limit",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Financials"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Financials"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /datasets/sec-companies/insider/{cik}",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Insider"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Cik",
+    "name": "cik",
+    "required": true,
+    "description": "SEC CIK, numeric or zero-padded",
+    "default": "",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Insider"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "From",
+    "name": "from",
+    "description": "Inclusive start date (YYYY-MM-DD, UTC) filtering transaction date",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "from",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Insider"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "To",
+    "name": "to",
+    "description": "Inclusive end date (YYYY-MM-DD, UTC) filtering transaction date",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "to",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Insider"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Code",
+    "name": "code",
+    "description": "Exact transaction code filter, e.g. P (open-market purchase), S (sale)",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "code",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Insider"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Limit",
+    "name": "limit",
+    "description": "Maximum transactions returned (most recent first), default 50, max 200",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "limit",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Insider"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Insider"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /datasets/sec-companies/items/{cik}",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Item"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Cik",
+    "name": "cik",
+    "required": true,
+    "description": "SEC CIK, numeric or zero-padded, e.g. 320193 or 0000320193",
+    "default": "",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Item"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Item"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /datasets/sec-companies/search",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Q",
+    "name": "q",
+    "description": "Full-text query over the company name, or an exact ticker match, max 256 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "q",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Ticker",
+    "name": "ticker",
+    "description": "Exact ticker filter (case-insensitive), e.g. AAPL, max 32 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "ticker",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Cik",
+    "name": "cik",
+    "description": "Exact CIK filter, numeric or zero-padded, e.g. 320193 or 0000320193",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "cik",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Sic",
+    "name": "sic",
+    "description": "Exact SIC industry-code filter, e.g. 3571, max 32 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "sic",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Sic Description",
+    "name": "sic_description",
+    "description": "Exact SIC description filter, e.g. Electronic Computers, max 128 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "sic_description",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Exchange",
+    "name": "exchange",
+    "description": "Exact exchange filter as reported by EDGAR, e.g. Nasdaq, NYSE, max 64 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "exchange",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "State Of Incorporation",
+    "name": "state_of_incorporation",
+    "description": "Exact state/country-of-incorporation filter as reported by EDGAR, e.g. DE, CA, max 32 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "state_of_incorporation",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Entity Type",
+    "name": "entity_type",
+    "description": "Exact entity-type filter as reported by EDGAR (e.g. operating), max 64 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "entity_type",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Reporting Currency",
+    "name": "reporting_currency",
+    "description": "Exact reporting-currency filter, ISO-4217 code, e.g. USD, JPY, EUR",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "reporting_currency",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Has Financials",
+    "name": "has_financials",
+    "description": "When true, keep only companies that have XBRL financial statements",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "has_financials",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Min Revenue",
+    "name": "min_revenue",
+    "description": "Minimum latest-annual revenue in USD (normalized from the filer's reporting currency at reference rates), 0 or greater",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "min_revenue",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Max Revenue",
+    "name": "max_revenue",
+    "description": "Maximum latest-annual revenue in USD (normalized), 0 or greater",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "max_revenue",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Min Net Income",
+    "name": "min_net_income",
+    "description": "Minimum latest-annual net income in USD (normalized; negative allowed)",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "min_net_income",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Min Total Assets",
+    "name": "min_total_assets",
+    "description": "Minimum latest-annual total assets in USD (normalized), 0 or greater",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "min_total_assets",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Form Filed",
+    "name": "form_filed",
+    "description": "Exact form-type filter; keeps only companies that have ever filed this form, e.g. 10-K, 8-K",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "form_filed",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Min Insider Txn Count 90 D",
+    "name": "min_insider_txn_count_90d",
+    "description": "Minimum insider (Form 3/4/5) transaction count in the trailing 90 days, 0 or greater",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "min_insider_txn_count_90d",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Sort",
+    "name": "sort",
+    "description": "Sort enum: relevance, name_asc, revenue_desc, net_income_desc, filing_recent_desc, insider_activity_desc",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "sort",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Page",
+    "name": "page",
+    "description": "Page number, defaults to 1",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "page",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Page Size",
+    "name": "page_size",
+    "description": "Page size, defaults to 20 and maxes at 100; page * page_size must be <= 10000",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "page_size",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Companies Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /datasets/sec-institutional-positions/facets",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Institutional Positions Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Facet",
+    "name": "facet",
+    "required": true,
+    "description": "Facet enum: manager, issuer",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "facet",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Institutional Positions Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Manager Cik",
+    "name": "manager_cik",
+    "description": "Exact institutional-manager CIK filter, numeric or zero-padded",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "manager_cik",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Institutional Positions Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Issuer Name",
+    "name": "issuer_name",
+    "description": "Issuer-name text filter (best-effort match), max 256 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "issuer_name",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Institutional Positions Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Cusip",
+    "name": "cusip",
+    "description": "Exact CUSIP filter, max 16 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "cusip",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Institutional Positions Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Institutional Positions Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /datasets/sec-institutional-positions/search",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Institutional Positions Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Manager Cik",
+    "name": "manager_cik",
+    "description": "Exact institutional-manager CIK filter, numeric or zero-padded",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "manager_cik",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Institutional Positions Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Issuer Name",
+    "name": "issuer_name",
+    "description": "Issuer-name text filter (best-effort match, not a resolved CIK join), max 256 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "issuer_name",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Institutional Positions Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Cusip",
+    "name": "cusip",
+    "description": "Exact CUSIP filter, max 16 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "cusip",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Institutional Positions Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Sort",
+    "name": "sort",
+    "description": "Sort enum: value_desc, value_asc, shares_desc",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "sort",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Institutional Positions Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Page",
+    "name": "page",
+    "description": "Page number, defaults to 1",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "page",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Institutional Positions Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Page Size",
+    "name": "page_size",
+    "description": "Page size, defaults to 20 and maxes at 100; page * page_size must be <= 10000",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "page_size",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Institutional Positions Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets Sec Institutional Positions Search"
         ]
       }
     }
@@ -24901,6 +27913,982 @@
     }
   },
   {
+    "displayName": "GET /datasets/x-users/facets",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Facet",
+    "name": "facet",
+    "required": true,
+    "description": "Facet enum: is_blue_verified, has_bio, has_external_url, source_tier",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "facet",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Q",
+    "name": "q",
+    "description": "Full-text query over username, name, bio and location, max 256 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "q",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Username",
+    "name": "username",
+    "description": "Exact username filter (case-insensitive), max 128 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "username",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Source Tier",
+    "name": "source_tier",
+    "description": "Exact filter for which seed tier discovered this account",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "source_tier",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Is Blue Verified",
+    "name": "is_blue_verified",
+    "description": "Filter by the X blue-check verification flag",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "is_blue_verified",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Has Bio",
+    "name": "has_bio",
+    "description": "Filter by a non-empty profile bio",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "has_bio",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Has External Url",
+    "name": "has_external_url",
+    "description": "Filter by a linked external URL",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "has_external_url",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Min Followers",
+    "name": "min_followers",
+    "description": "Minimum follower count",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "min_followers",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Max Followers",
+    "name": "max_followers",
+    "description": "Maximum follower count",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "max_followers",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Min Ratio",
+    "name": "min_ratio",
+    "description": "Minimum follower-to-following ratio",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "min_ratio",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Max Ratio",
+    "name": "max_ratio",
+    "description": "Maximum follower-to-following ratio",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "max_ratio",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Created After",
+    "name": "created_after",
+    "description": "Accounts created on or after this date (RFC3339 or YYYY-MM-DD)",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "created_after",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Created Before",
+    "name": "created_before",
+    "description": "Accounts created on or before this date (RFC3339 or YYYY-MM-DD)",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "created_before",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Crawled After",
+    "name": "crawled_after",
+    "description": "Records last refreshed on or after this date (RFC3339 or YYYY-MM-DD)",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "crawled_after",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Crawled Before",
+    "name": "crawled_before",
+    "description": "Records last refreshed on or before this date (RFC3339 or YYYY-MM-DD)",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "crawled_before",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Sort",
+    "name": "sort",
+    "description": "Sort enum: relevance, followers_desc, followers_asc, crawled_at_desc, crawled_at_asc, created_at_desc, created_at_asc",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "sort",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Facets"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /datasets/x-users/items/{username}",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Item"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Username",
+    "name": "username",
+    "required": true,
+    "description": "X username, with or without a leading @, max 128 characters",
+    "default": "",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Item"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Item"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /datasets/x-users/search",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Q",
+    "name": "q",
+    "description": "Full-text query over username, name, bio and location, max 256 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "q",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Username",
+    "name": "username",
+    "description": "Exact username filter (case-insensitive), max 128 characters",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "username",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Source Tier",
+    "name": "source_tier",
+    "description": "Exact filter for which seed tier discovered this account, e.g. github-users, wikidata, tiktok-creators, journalists",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "source_tier",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Is Blue Verified",
+    "name": "is_blue_verified",
+    "description": "Filter by the X blue-check verification flag",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "is_blue_verified",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Has Bio",
+    "name": "has_bio",
+    "description": "Filter by a non-empty profile bio",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "has_bio",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Has External Url",
+    "name": "has_external_url",
+    "description": "Filter by a linked external URL",
+    "default": true,
+    "type": "boolean",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "has_external_url",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Min Followers",
+    "name": "min_followers",
+    "description": "Minimum follower count",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "min_followers",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Max Followers",
+    "name": "max_followers",
+    "description": "Maximum follower count",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "max_followers",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Min Ratio",
+    "name": "min_ratio",
+    "description": "Minimum follower-to-following ratio (low values surface follow-spam / bot-like accounts)",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "min_ratio",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Max Ratio",
+    "name": "max_ratio",
+    "description": "Maximum follower-to-following ratio",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "max_ratio",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Created After",
+    "name": "created_after",
+    "description": "Accounts created on or after this date (RFC3339 or YYYY-MM-DD)",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "created_after",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Created Before",
+    "name": "created_before",
+    "description": "Accounts created on or before this date (RFC3339 or YYYY-MM-DD)",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "created_before",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Crawled After",
+    "name": "crawled_after",
+    "description": "Records last refreshed on or after this date (RFC3339 or YYYY-MM-DD)",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "crawled_after",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Crawled Before",
+    "name": "crawled_before",
+    "description": "Records last refreshed on or before this date (RFC3339 or YYYY-MM-DD)",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "crawled_before",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Sort",
+    "name": "sort",
+    "description": "Sort enum: relevance, followers_desc, followers_asc, crawled_at_desc, crawled_at_asc, created_at_desc, created_at_asc",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "sort",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Page",
+    "name": "page",
+    "description": "Page number, defaults to 1",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "page",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Page Size",
+    "name": "page_size",
+    "description": "Page size, defaults to 20 and maxes at 100; page * page_size must be <= 10000",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "page_size",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Datasets"
+        ],
+        "operation": [
+          "Datasets X Users Search"
+        ]
+      }
+    }
+  },
+  {
     "displayName": "POST /diagnostics/antibot-check",
     "name": "operation",
     "type": "notice",
@@ -27882,6 +31870,230 @@
         ],
         "operation": [
           "Github User Events"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /github/user/{username}/followers",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Git Hub"
+        ],
+        "operation": [
+          "Github User Followers"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Username",
+    "name": "username",
+    "required": true,
+    "description": "GitHub username",
+    "default": "",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Git Hub"
+        ],
+        "operation": [
+          "Github User Followers"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Page",
+    "name": "page",
+    "description": "Page number",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "page",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Git Hub"
+        ],
+        "operation": [
+          "Github User Followers"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Per Page",
+    "name": "per_page",
+    "description": "Results per page (max 100)",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "per_page",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Git Hub"
+        ],
+        "operation": [
+          "Github User Followers"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Git Hub"
+        ],
+        "operation": [
+          "Github User Followers"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /github/user/{username}/following",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Git Hub"
+        ],
+        "operation": [
+          "Github User Following"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Username",
+    "name": "username",
+    "required": true,
+    "description": "GitHub username",
+    "default": "",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Git Hub"
+        ],
+        "operation": [
+          "Github User Following"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Page",
+    "name": "page",
+    "description": "Page number",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "page",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Git Hub"
+        ],
+        "operation": [
+          "Github User Following"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Per Page",
+    "name": "per_page",
+    "description": "Results per page (max 100)",
+    "default": 0,
+    "type": "number",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "per_page",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Git Hub"
+        ],
+        "operation": [
+          "Github User Following"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Git Hub"
+        ],
+        "operation": [
+          "Github User Following"
         ]
       }
     }
@@ -34902,6 +39114,385 @@
         ],
         "operation": [
           "Spotify Track"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /threads/post/{username}/{code}",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Threads"
+        ],
+        "operation": [
+          "Threads Post"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Username",
+    "name": "username",
+    "required": true,
+    "description": "Threads username",
+    "default": "",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Threads"
+        ],
+        "operation": [
+          "Threads Post"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Code",
+    "name": "code",
+    "required": true,
+    "description": "Threads post code",
+    "default": "",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Threads"
+        ],
+        "operation": [
+          "Threads Post"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Threads"
+        ],
+        "operation": [
+          "Threads Post"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /threads/post/{username}/{code}/replies",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Threads"
+        ],
+        "operation": [
+          "Threads Post Replies"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Username",
+    "name": "username",
+    "required": true,
+    "description": "Threads username",
+    "default": "",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Threads"
+        ],
+        "operation": [
+          "Threads Post Replies"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Code",
+    "name": "code",
+    "required": true,
+    "description": "Threads post code",
+    "default": "",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Threads"
+        ],
+        "operation": [
+          "Threads Post Replies"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Threads"
+        ],
+        "operation": [
+          "Threads Post Replies"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /threads/profile/{username}",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Threads"
+        ],
+        "operation": [
+          "Threads Profile"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Username",
+    "name": "username",
+    "required": true,
+    "description": "Threads username",
+    "default": "",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Threads"
+        ],
+        "operation": [
+          "Threads Profile"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Threads"
+        ],
+        "operation": [
+          "Threads Profile"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /threads/profile/{username}/posts",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Threads"
+        ],
+        "operation": [
+          "Threads Profile Posts"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Username",
+    "name": "username",
+    "required": true,
+    "description": "Threads username",
+    "default": "",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Threads"
+        ],
+        "operation": [
+          "Threads Profile Posts"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Cursor",
+    "name": "cursor",
+    "description": "Opaque cursor returned by the previous response",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "cursor",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Threads"
+        ],
+        "operation": [
+          "Threads Profile Posts"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Threads"
+        ],
+        "operation": [
+          "Threads Profile Posts"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "GET /threads/search",
+    "name": "operation",
+    "type": "notice",
+    "typeOptions": {
+      "theme": "info"
+    },
+    "default": "",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Threads"
+        ],
+        "operation": [
+          "Threads Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Q",
+    "name": "q",
+    "required": true,
+    "description": "Search query (1-100 characters)",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "send": {
+        "type": "query",
+        "property": "q",
+        "value": "={{ $value }}",
+        "propertyInDotNotation": false
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Threads"
+        ],
+        "operation": [
+          "Threads Search"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "X Api Key",
+    "name": "x-api-key",
+    "required": true,
+    "description": "API key required",
+    "default": "",
+    "type": "string",
+    "routing": {
+      "request": {
+        "headers": {
+          "x-api-key": "={{ $value }}"
+        }
+      }
+    },
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "Threads"
+        ],
+        "operation": [
+          "Threads Search"
         ]
       }
     }
