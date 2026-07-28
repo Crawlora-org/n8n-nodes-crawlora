@@ -11,11 +11,11 @@
     "api"
   ],
   "license": "MIT",
-  "homepage": "https://crawlora.net",
+  "homepage": "https://crawlora.net?utm_source=npm&utm_medium=referral&utm_campaign=n8n-nodes-crawlora",
   "author": {
     "name": "Crawlora",
     "email": "tonywang.data@gmail.com",
-    "url": "https://crawlora.net"
+    "url": "https://crawlora.net?utm_source=github&utm_medium=referral&utm_campaign=n8n-nodes-crawlora"
   },
   "repository": {
     "type": "git",
