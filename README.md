@@ -41,7 +41,7 @@ The node is also **usable as a tool** inside the n8n **AI Agent**, so an agent c
 operations directly.
 
 > Prefer MCP? Crawlora also ships a hosted MCP server with the full catalog — use n8n's **MCP Client**
-> node to call every Crawlora tool from an AI Agent workflow. See https://docs.crawlora.net?utm_source=github&utm_medium=referral&utm_campaign=n8n-nodes-crawlora.
+> node to call every Crawlora tool from an AI Agent workflow. See [https://docs.crawlora.net](https://docs.crawlora.net?utm_source=github&utm_medium=referral&utm_campaign=n8n-nodes-crawlora).
 
 ## Workflow templates
 
@@ -82,8 +82,8 @@ the [n8n community-node docs](https://docs.n8n.io/integrations/creating-nodes/de
 
 ## Links
 
-- API documentation: https://docs.crawlora.net?utm_source=github&utm_medium=referral&utm_campaign=n8n-nodes-crawlora
-- Crawlora: https://crawlora.net?utm_source=github&utm_medium=referral&utm_campaign=n8n-nodes-crawlora
+- API documentation: [https://docs.crawlora.net](https://docs.crawlora.net?utm_source=github&utm_medium=referral&utm_campaign=n8n-nodes-crawlora)
+- Crawlora: [https://crawlora.net](https://crawlora.net?utm_source=github&utm_medium=referral&utm_campaign=n8n-nodes-crawlora)
 
 ## License
 
