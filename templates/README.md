@@ -22,7 +22,7 @@ email_type, email_status, all_emails, socials, place_id`
 ### Setup
 1. **Crawlora key** — create an **HTTP Header Auth** credential named
    `Crawlora API (x-api-key)`: header **Name** `x-api-key`, **Value** = your key from
-   [crawlora.net](https://crawlora.net) (free tier: 2,000 credits/month, no card).
+   [crawlora.net](https://crawlora.net?utm_source=github&utm_medium=referral&utm_campaign=n8n-nodes-crawlora) (free tier: 2,000 credits/month, no card).
 2. **Search** — open **Crawlora: Google Maps dataset search** and edit the query parameters
    (`q`, `city`, `state`, `category`, `min_rating`, `has_website`, …).
 3. **Sheet** — open **Append lead to Google Sheet**, connect a Google Sheets credential, and

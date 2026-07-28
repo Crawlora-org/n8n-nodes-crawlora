@@ -10,7 +10,7 @@ export class CrawloraApi implements ICredentialType {
 
 	displayName = 'Crawlora API';
 
-	documentationUrl = 'https://docs.crawlora.net';
+	documentationUrl = 'https://docs.crawlora.net?utm_source=github&utm_medium=referral&utm_campaign=n8n-nodes-crawlora';
 
 	properties: INodeProperties[] = [
 		{
@@ -21,7 +21,7 @@ export class CrawloraApi implements ICredentialType {
 			default: '',
 			required: true,
 			description:
-				'Your Crawlora API key. Find it at https://crawlora.net/app/api-keys (new accounts include a free monthly credit allowance).',
+				'Your Crawlora API key. Find it at https://crawlora.net/app/api-keys?utm_source=github&utm_medium=referral&utm_campaign=n8n-nodes-crawlora (new accounts include a free monthly credit allowance).',
 		},
 	];
 

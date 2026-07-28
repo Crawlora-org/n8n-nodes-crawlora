@@ -1,6 +1,6 @@
 # n8n-nodes-crawlora
 
-An [n8n](https://n8n.io) community node for [Crawlora](https://crawlora.net) — get structured web
+An [n8n](https://n8n.io) community node for [Crawlora](https://crawlora.net?utm_source=github&utm_medium=referral&utm_campaign=n8n-nodes-crawlora) — get structured web
 data from the public web (search, maps, e‑commerce, social, finance, page content, and more) without
 maintaining your own parsers.
 
@@ -28,7 +28,7 @@ In n8n: **Settings → Community Nodes → Install**, then enter `n8n-nodes-craw
 ## Credentials
 
 Create a **Crawlora API** credential and paste your API key. It is sent as the `x-api-key` header on
-every request. Get a key from your [Crawlora dashboard](https://crawlora.net/app/api-keys) — new
+every request. Get a key from your [Crawlora dashboard](https://crawlora.net/app/api-keys?utm_source=github&utm_medium=referral&utm_campaign=n8n-nodes-crawlora) — new
 accounts include a free monthly credit allowance, no card required.
 
 ## Usage
@@ -41,7 +41,7 @@ The node is also **usable as a tool** inside the n8n **AI Agent**, so an agent c
 operations directly.
 
 > Prefer MCP? Crawlora also ships a hosted MCP server with the full catalog — use n8n's **MCP Client**
-> node to call every Crawlora tool from an AI Agent workflow. See https://docs.crawlora.net.
+> node to call every Crawlora tool from an AI Agent workflow. See https://docs.crawlora.net?utm_source=github&utm_medium=referral&utm_campaign=n8n-nodes-crawlora.
 
 ## Workflow templates
 
@@ -82,8 +82,8 @@ the [n8n community-node docs](https://docs.n8n.io/integrations/creating-nodes/de
 
 ## Links
 
-- API documentation: https://docs.crawlora.net
-- Crawlora: https://crawlora.net
+- API documentation: https://docs.crawlora.net?utm_source=github&utm_medium=referral&utm_campaign=n8n-nodes-crawlora
+- Crawlora: https://crawlora.net?utm_source=github&utm_medium=referral&utm_campaign=n8n-nodes-crawlora
 
 ## License
 
