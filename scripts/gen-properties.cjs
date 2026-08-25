@@ -98,7 +98,7 @@ const TEXT_REPLACEMENTS = loadRedactions();
 // Curated allow-list for the VERIFIED node (resource tag -> Set of operationIds, or "*").
 // n8n verifies curated single-vendor nodes (SerpApi ~37 ops, ScrapingBee ~17); a 430-op node
 // is too sprawling to review. Anything not listed is dropped. Build the full surface with
-// CURATE=0 npm run gen. See webscraping-fe docs/n8n-verified-node-packaging-plan-2026-06.md.
+// CURATE=0 npm run gen.
 function loadCuration() {
 	if (process.env.CURATE === '0') return null;
 	const f = path.resolve(__dirname, 'curation.json');
