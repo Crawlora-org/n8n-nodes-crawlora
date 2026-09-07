@@ -4,10 +4,6 @@ name: Publish
 # n8n's community-node verification (from 2026-05-01) requires provenance, which
 # needs `id-token: write` + npm CLI >= 9.5 on a supported CI (GitHub Actions).
 #
-# One-time setup (owner): add an automation-type npm token as the `NPM_TOKEN`
-# repository secret, then publish a release with:
-#   npm version <patch|minor> && git push --follow-tags
-
 on:
   push:
     tags:
@@ -22,13 +18,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: 22
-          registry-url: 'https://registry.npmjs.org'
+          node-version: 24
+          package-manager-cache: false
       - run: npm ci
       - run: npm run build
       - run: npm run smoke
-      - run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm publish --provenance --access public --registry=https://registry.npmjs.org
