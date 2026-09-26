@@ -283,7 +283,7 @@
         "name": "Bing Search",
         "value": "Bing Search",
         "action": "Search Bing web results",
-        "description": "Returns normalized Bing web search results for a query string, including organic results, optional context panel data, related queries, people-also-ask questions, news modules, video modules, and page-based pagination. Empty optional blocks are omitted from the JSON response. Locale defaults to country=us and lang=en-us. Results are fetched with a Chrome-impersonated request client and return 503 when Bing serves a challenge page or unusable HTML. Queries that use the site: operator (for example site:gov.hu) are not supported: Bing serves a bot-verification challenge for them, so they are rejected with 400 before any request is made. Use the Google search endpoint (/api/v1/google/search) for domain-restricted searches.",
+        "description": "Returns normalized Bing web search results for a query string, including organic results, optional context panel data, related queries, people-also-ask questions, news modules, video modules, and page-based pagination. Empty optional blocks are omitted from the JSON response. Locale defaults to country=us and lang=en-us. Results are fetched with a Chrome-impersonated request client and return 503 when Bing serves a challenge page or unusable HTML. Queries that use the site: operator (for example site:gov.hu) are not supported: Bing serves a bot-verification challenge for them, so they are rejected with 400 before any request is made.",
         "routing": {
           "request": {
             "method": "GET",
@@ -2128,18 +2128,6 @@
           "request": {
             "method": "GET",
             "url": "=/google/news"
-          }
-        }
-      },
-      {
-        "name": "Google Search",
-        "value": "Google Search",
-        "action": "Google search API",
-        "description": "Returns normalized Google web search results. Results are fetched through proxied browser renderers that race several concurrent renders per request and return the first clean result, with stale-cache fallback when available. The endpoint returns 503 when Google serves a challenge page or unusable HTML. Rate limit is enforced at 1 request per second, and if the limit is exceeded a 429 status code is returned with rate limit headers.",
-        "routing": {
-          "request": {
-            "method": "POST",
-            "url": "=/google/search"
           }
         }
       },
@@ -35589,151 +35577,6 @@
         ],
         "operation": [
           "Google News"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "POST /google/search",
-    "name": "operation",
-    "type": "notice",
-    "typeOptions": {
-      "theme": "info"
-    },
-    "default": "",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google Search"
-        ]
-      }
-    }
-  },
-  {
-    "required": true,
-    "displayName": "Country",
-    "name": "country",
-    "type": "string",
-    "default": "us",
-    "description": "Country code",
-    "routing": {
-      "send": {
-        "property": "country",
-        "propertyInDotNotation": false,
-        "type": "body",
-        "value": "={{ $value }}"
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google Search"
-        ]
-      }
-    }
-  },
-  {
-    "required": true,
-    "displayName": "Keyword",
-    "name": "keyword",
-    "type": "string",
-    "default": "chatgpt",
-    "routing": {
-      "send": {
-        "property": "keyword",
-        "propertyInDotNotation": false,
-        "type": "body",
-        "value": "={{ $value }}"
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google Search"
-        ]
-      }
-    }
-  },
-  {
-    "required": true,
-    "displayName": "Language",
-    "name": "language",
-    "type": "string",
-    "default": "en",
-    "description": "language code",
-    "routing": {
-      "send": {
-        "property": "language",
-        "propertyInDotNotation": false,
-        "type": "body",
-        "value": "={{ $value }}"
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google Search"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "Limit",
-    "name": "limit",
-    "type": "number",
-    "default": 10,
-    "description": "Number of items,  from 10 to 100, inclusive",
-    "routing": {
-      "send": {
-        "property": "limit",
-        "propertyInDotNotation": false,
-        "type": "body",
-        "value": "={{ $value }}"
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google Search"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "Page",
-    "name": "page",
-    "type": "number",
-    "default": 1,
-    "routing": {
-      "send": {
-        "property": "page",
-        "propertyInDotNotation": false,
-        "type": "body",
-        "value": "={{ $value }}"
-      }
-    },
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "Google"
-        ],
-        "operation": [
-          "Google Search"
         ]
       }
     }
