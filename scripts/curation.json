@@ -3,7 +3,6 @@
 
   "Web": "*",
   "Google": [
-    "google-search",
     "google-news",
     "google-videos",
     "google-suggest",
